@@ -1,10 +1,22 @@
+const mongoHost = "127.0.0.1";
+const mongoPort = 27017;
+const mongoConnection = `mongodb://${mongoHost}:${mongoPort}/recycle-database`;
+
+const mongoose = require("mongoose");
+
+mongoose
+  .connect(mongoConnection)
+  .then(() => console.log("Connected to MongoDB."))
+  .catch((err) => console.error("Error connecting to MongoDB:", err));
+
 const express = require("express");
 const server = express();
-
+server.use(express.json());
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsdoc = require("swagger-jsdoc");
 
 const routesUser = require("./routes/userRoute.js");
+
 routesUser(server);
 
 const options = {
