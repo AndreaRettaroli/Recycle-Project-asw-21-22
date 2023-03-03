@@ -14,6 +14,11 @@
  *         - name
  *         - surname
  *         - email
+ *         - password
+ *         - address
+ *         - province
+ *         - language
+ *         - role
  *       properties:
  *         id:
  *           type: string
@@ -27,16 +32,41 @@
  *         email:
  *           type: string
  *           description: The email of the user
+ *         password:
+ *           type: string
+ *           description: The password of the user
+ *         address:
+ *           type: string
+ *           description: The address of the user residence
+ *         province:
+ *           type: string
+ *           description: The province of the user residence
+ *         language:
+ *           type: string
+ *           description: The user language
+ *         role:
+ *           type: string
+ *           description: The user role
  *         createdAt:
  *           type: string
  *           format: date
  *           description: The date the user was added
+ *         updatedAt:
+ *           type: string
+ *           format: date
+ *           description: The date the user was update
  *       example:
- *         id: d5fEq34aszfaibwaxqn
+ *         id: 64023aac471e5c26eccd26bd
  *         name: Andrea
  *         surname: Rettaroli
  *         email: rettaroli.andrea2597@gmail.com
+ *         password: -Prova123
+ *         address: via rossi 14
+ *         province: AN
+ *         language: it-IT
+ *         role: user
  *         createdAt: 2020-03-10T04:05:06.157Z
+ *         updatedAt: 2023-03-10T04:05:06.157Z
  */
 
 const controller = require("../controllers/userController.js");
@@ -51,6 +81,10 @@ module.exports = (server) => {
    *     responses:
    *       200:
    *         description: User correct signup
+   *       409:
+   *         description: Email already used
+   *       500:
+   *         description: Internal server error
    */
   server.route("/signup").post(controller.signup);
 
@@ -87,7 +121,7 @@ module.exports = (server) => {
    *            schema:
    *              $ref: '#/components/schemas/User'
    */
-  server.route("/user/:_id").get(controller.getUser);
+  server.route("/user").get(controller.getUser);
   /**
    * @swagger
    * /user/{id}:
@@ -120,7 +154,7 @@ module.exports = (server) => {
    *          description: Some error happened
 
    */
-  server.route("/user/:_id").put(controller.updateUser);
+  server.route("/user").put(controller.updateUser);
   /**
    * @swagger
    * /user/{id}:
@@ -140,7 +174,7 @@ module.exports = (server) => {
    *       404:
    *         description: The user was not found
    */
-  server.route("/user/:_id").delete(controller.deleteUser);
+  server.route("/user").delete(controller.deleteUser);
   /**
    * @swagger
    * /users:
