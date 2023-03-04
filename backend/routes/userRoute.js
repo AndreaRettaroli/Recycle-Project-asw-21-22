@@ -97,17 +97,19 @@ module.exports = (server) => {
    *     responses:
    *       200:
    *         description: User correct login
+   *       500:
+   *         description: Internal server error
    */
   server.route("/login").post(controller.login);
 
   /**
    * @swagger
-   * /user/{id}:
+   * /user:
    *   get:
    *     summary: Get user by id
    *     tags: [User]
    *     parameters:
-   *       - in: path
+   *       - in: query
    *         name: id
    *         schema:
    *           type: string
@@ -120,16 +122,18 @@ module.exports = (server) => {
    *          application/json:
    *            schema:
    *              $ref: '#/components/schemas/User'
+   *       500:
+   *         description: Internal server error
    */
   server.route("/user").get(controller.getUser);
   /**
    * @swagger
-   * /user/{id}:
+   * /user:
    *   put:
    *     summary: Update user by id
    *     tags: [User]
    *     parameters:
-   *       - in: path
+   *       - in: query
    *         name: id
    *         schema:
    *           type: string
@@ -151,18 +155,18 @@ module.exports = (server) => {
    *        404:
    *          description: The user was not found
    *        500:
-   *          description: Some error happened
-
+   *         description: Internal server error
+   *
    */
   server.route("/user").put(controller.updateUser);
   /**
    * @swagger
-   * /user/{id}:
+   * /user:
    *   delete:
    *     summary: Remove user by id
    *     tags: [User]
    *     parameters:
-   *       - in: path
+   *       - in: query
    *         name: id
    *         schema:
    *           type: string
@@ -173,6 +177,8 @@ module.exports = (server) => {
    *         description: The user was deleted
    *       404:
    *         description: The user was not found
+   *       500:
+   *         description: Internal server error
    */
   server.route("/user").delete(controller.deleteUser);
   /**
@@ -190,6 +196,8 @@ module.exports = (server) => {
    *               type: array
    *               items:
    *                 $ref: '#/components/schemas/User'
+   *       500:
+   *         description: Internal server error
    */
   server.route("/users").get(controller.usersList);
 };
