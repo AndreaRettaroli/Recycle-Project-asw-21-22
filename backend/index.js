@@ -16,8 +16,10 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerJsdoc = require("swagger-jsdoc");
 
 const routesUser = require("./routes/userRoute.js");
+const routesBasket = require("./routes/basketRoute.js");
 
 routesUser(server);
+routesBasket(server);
 
 const options = {
   definition: {
