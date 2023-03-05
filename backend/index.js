@@ -1,11 +1,12 @@
-const mongoHost = "127.0.0.1";
-const mongoPort = 27017;
-const mongoConnection = `mongodb://${mongoHost}:${mongoPort}/recycle-database`;
+const io = require('socket.io');
+const { socketHandler } = require("./middleware/socket.js");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const mongoose = require("mongoose");
 
 mongoose
-  .connect(mongoConnection)
+  .connect(process.env.MONGO_DB_CONNECTION_STRING)
   .then(() => console.log("Connected to MongoDB."))
   .catch((err) => console.error("Error connecting to MongoDB:", err));
 
@@ -41,7 +42,7 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: `http://localhost:${process.env.PORT}`,
       },
     ],
   },
@@ -51,6 +52,12 @@ const options = {
 const specs = swaggerJsdoc(options);
 server.use("/", swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
 
-server.listen(3000, () => {
-  console.log("Listening on http://localhost:3000/");
+const httpServer = server.listen(process.env.PORT, () => {
+  console.log(`Listening on http://localhost:${process.env.PORT}`);
 });
+const socket = io(httpServer, {
+  cors: {
+    origin: "*",
+  },
+});
+socketHandler(socket);
