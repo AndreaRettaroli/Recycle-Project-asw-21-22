@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const basketModel = require("../models/basketModel")(mongoose);
+const basketModel = require("../models/basketModel");
 
 const MAXIMUM_BASKET_PER_USER = 5;
 
@@ -69,7 +68,7 @@ exports.updateBasket = async (req, res) => {
       {
         new: true,
       }
-    ); //new true return new user
+    ); //new true return new basket
     return res.status(200).json(updatedBasket);
   } catch (err) {
     console.error(

@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const userModel = require("../models/userModel")(mongoose);
+const userModel = require("../models/userModel");
 
 exports.signup = async (req, res) => {
   try {
