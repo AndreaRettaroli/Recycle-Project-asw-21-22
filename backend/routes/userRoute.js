@@ -2,9 +2,9 @@
  * @swagger
  * tags:
  *   name: Access
- *   description: Signup and Login user API,
+ *   description: Signup and Login user APIs
  *   name: User
- *   description: Signup and Login user API
+ *   description: User APIs
  * @swagger
  * components:
  *   schemas:
@@ -20,7 +20,7 @@
  *         - language
  *         - role
  *       properties:
- *         id:
+ *         _id:
  *           type: string
  *           description: The auto-generated id of the user
  *         name:
@@ -50,13 +50,13 @@
  *         createdAt:
  *           type: string
  *           format: date
- *           description: The date the user was added
+ *           description: The date when the user was added
  *         updatedAt:
  *           type: string
  *           format: date
- *           description: The date the user was update
+ *           description: The date when the user was update
  *       example:
- *         id: 64023aac471e5c26eccd26bd
+ *         _id: 64023aac471e5c26eccd26bd
  *         name: Andrea
  *         surname: Rettaroli
  *         email: rettaroli.andrea2597@gmail.com
@@ -69,7 +69,7 @@
  *         updatedAt: 2023-03-10T04:05:06.157Z
  */
 
-const controller = require("../controllers/userController.js");
+const controller = require("../controllers/userController");
 
 module.exports = (server) => {
   /**

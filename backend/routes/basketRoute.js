@@ -14,7 +14,7 @@
  *         - dimension
  *         - filling
  *       properties:
- *         id:
+ *         _id:
  *           type: string
  *           description: The auto-generated id of the trash basket
  *         userId:
@@ -32,13 +32,13 @@
  *         createdAt:
  *           type: string
  *           format: date
- *           description: The date the user was added
+ *           description: The date when the trash basket was added
  *         updatedAt:
  *           type: string
  *           format: date
- *           description: The date the user was update
+ *           description: The date  when the trash basket was update
  *       example:
- *         id: 25023aac471e5c26eccd23bz
+ *         _id: 25023aac471e5c26eccd23bz
  *         userId: 64023aac471e5c26eccd26bd
  *         type: Glass
  *         dimension: 5.00
@@ -47,7 +47,7 @@
  *         updatedAt: 2023-03-10T04:05:06.157Z
  */
 
-const controller = require("../controllers/basketController.js");
+const controller = require("../controllers/basketController");
 
 module.exports = (server) => {
   /**

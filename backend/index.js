@@ -1,5 +1,5 @@
-const io = require('socket.io');
-const { socketHandler } = require("./middleware/socket.js");
+const io = require("socket.io");
+const { socketHandler } = require("./middleware/socket");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -16,11 +16,17 @@ server.use(express.json());
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsdoc = require("swagger-jsdoc");
 
-const routesUser = require("./routes/userRoute.js");
-const routesBasket = require("./routes/basketRoute.js");
+const userRoutes = require("./routes/userRoute");
+const basketRoutes = require("./routes/basketRoute");
+const acquisitionRoutes = require("./routes/acquisitionRoute");
+const priceRoutes = require("./routes/priceRoute");
+const withdrawalRoutes = require("./routes/withdrawalRoute");
 
-routesUser(server);
-routesBasket(server);
+userRoutes(server);
+basketRoutes(server);
+acquisitionRoutes(server);
+priceRoutes(server);
+withdrawalRoutes(server);
 
 const options = {
   definition: {
