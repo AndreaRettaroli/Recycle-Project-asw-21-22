@@ -32,6 +32,13 @@ module.exports = (mongoose) => {
       type: String,
       required: true,
     },
+    createdAt: {
+      type: Date,
+      required: true,
+    },
+    updatedAt: {
+      type: Date,
+    },
   });
   return mongoose.model("Users", userSchema);
 };

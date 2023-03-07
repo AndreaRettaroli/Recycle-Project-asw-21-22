@@ -18,6 +18,13 @@ module.exports = (mongoose) => {
       type: Number,
       required: true,
     },
+    createdAt: {
+      type: Date,
+      required: true,
+    },
+    updatedAt: {
+      type: Date,
+    },
   });
   return mongoose.model("Baskets", basketSchema);
 };

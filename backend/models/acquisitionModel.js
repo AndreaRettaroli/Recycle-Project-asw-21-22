@@ -23,6 +23,10 @@ module.exports = (mongoose) => {
       type: Number,
       required: true,
     },
+    createdAt: {
+      type: Date,
+      required: true,
+    },
   });
   return mongoose.model("Acquisitions", userSchema);
 };
