@@ -2,6 +2,7 @@ const acquisitionModel = require("../models/acquisitionModel");
 const userModel = require("../models/userModel");
 const basketModel = require("../models/basketModel");
 const withdrawalModel = require("../models/withdrawalModel");
+const priceModel = require("../models/priceModel");
 
 const WasteType = [
   "PLASTIC",
