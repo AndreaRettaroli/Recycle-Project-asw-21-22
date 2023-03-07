@@ -52,7 +52,7 @@ const controller = require("../controllers/basketController.js");
 module.exports = (server) => {
   /**
    * @swagger
-   * /basket:
+   * /api/basket:
    *   post:
    *     summary: Create a trash basket
    *     tags: [Basket]
@@ -70,10 +70,10 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/basket").post(controller.createBasket);
+  server.route("/api/basket").post(controller.createBasket);
   /**
    * @swagger
-   * /basket:
+   * /api/basket:
    *   get:
    *     summary: Get basket info from id
    *     tags: [Basket]
@@ -96,11 +96,11 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/basket").get(controller.getBasket);
+  server.route("/api/basket").get(controller.getBasket);
 
   /**
    * @swagger
-   * /basket:
+   * /api/basket:
    *   put:
    *     summary: Update basket by id
    *     tags: [Basket]
@@ -130,10 +130,10 @@ module.exports = (server) => {
    *          description: Internal server error
 
    */
-  server.route("/basket").put(controller.updateBasket);
+  server.route("/api/basket").put(controller.updateBasket);
   /**
    * @swagger
-   * /basket:
+   * /api/basket:
    *   delete:
    *     summary: Remove basket by id
    *     tags: [Basket]
@@ -152,10 +152,10 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/basket").delete(controller.deleteBasket);
+  server.route("/api/basket").delete(controller.deleteBasket);
   /**
    * @swagger
-   * /baskets:
+   * /api/baskets:
    *   get:
    *     summary: Get a list of basket
    *     tags: [Basket]
@@ -178,5 +178,5 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/baskets").get(controller.basketsList);
+  server.route("/api/baskets").get(controller.basketsList);
 };

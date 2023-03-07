@@ -74,7 +74,7 @@ const controller = require("../controllers/userController.js");
 module.exports = (server) => {
   /**
    * @swagger
-   * /signup:
+   * /api/signup:
    *   post:
    *     summary: Signup user
    *     tags: [Access]
@@ -86,11 +86,11 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/signup").post(controller.signup);
+  server.route("/api/signup").post(controller.signup);
 
   /**
    * @swagger
-   * /login:
+   * /api/login:
    *   post:
    *     summary: Login user
    *     tags: [Access]
@@ -100,11 +100,11 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/login").post(controller.login);
+  server.route("/api/login").post(controller.login);
 
   /**
    * @swagger
-   * /user:
+   * /api/user:
    *   get:
    *     summary: Get user by id
    *     tags: [User]
@@ -125,10 +125,10 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/user").get(controller.getUser);
+  server.route("/api/user").get(controller.getUser);
   /**
    * @swagger
-   * /user:
+   * /api/user:
    *   put:
    *     summary: Update user by id
    *     tags: [User]
@@ -158,10 +158,10 @@ module.exports = (server) => {
    *         description: Internal server error
    *
    */
-  server.route("/user").put(controller.updateUser);
+  server.route("/api/user").put(controller.updateUser);
   /**
    * @swagger
-   * /user:
+   * /api/user:
    *   delete:
    *     summary: Remove user by id
    *     tags: [User]
@@ -180,10 +180,10 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/user").delete(controller.deleteUser);
+  server.route("/api/user").delete(controller.deleteUser);
   /**
    * @swagger
-   * /users:
+   * /api/users:
    *   get:
    *     summary: Get a list of users
    *     tags: [User]
@@ -199,5 +199,5 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/users").get(controller.usersList);
+  server.route("/api/users").get(controller.usersList);
 };
