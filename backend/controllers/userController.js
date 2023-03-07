@@ -11,12 +11,13 @@ exports.signup = async (req, res) => {
     }
     const newUser = new userModel({
       ...req.body,
+      role: "user",
       createdAt: new Date().toISOString(),
     });
     await newUser.save();
     return res.status(200).json(newUser);
   } catch (err) {
-    console.log(
+    console.error(
       "🚀 ~ file: userController.js:21 ~ exports.signup= ~ err:",
       err
     );
@@ -35,7 +36,7 @@ exports.getUser = async (req, res) => {
     }
     return res.status(200).json(user);
   } catch (err) {
-    console.log(
+    console.error(
       "🚀 ~ file: userController.js:35 ~ exports.getUser= ~ err:",
       err
     );
@@ -56,7 +57,7 @@ exports.updateUser = async (req, res) => {
     }); //new true return new user
     return res.status(200).json(updatedUser);
   } catch (err) {
-    console.log(
+    console.error(
       "🚀 ~ file: userController.js:50 ~ exports.updateUser= ~ err:",
       err
     );
@@ -74,6 +75,7 @@ exports.deleteUser = async (req, res) => {
     if (user.role === "admin") {
       return res.status(400).json({ error: "Admin can't be deleted" });
     }
+    await userModel.findByIdAndDelete(userId);
     return res.status(200).json({ description: "User deleted" });
   } catch (err) {
     return res.status(500).json({ error: "Internal server error" });
@@ -85,7 +87,7 @@ exports.usersList = async (req, res) => {
     let users = await userModel.find({});
     return res.status(200).json(users);
   } catch (err) {
-    console.log(
+    console.error(
       "🚀 ~ file: userController.js:41 ~ exports.usersList= ~ err:",
       err
     );

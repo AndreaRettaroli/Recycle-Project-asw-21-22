@@ -13,7 +13,7 @@ exports.createBasket = async (req, res) => {
     );
 
     if (baskets.length < MAXIMUM_BASKET_PER_USER) {
-      if (baskets.same((basket) => basket.type === type)) {
+      if (baskets.some((basket) => basket.type === type)) {
         return res
           .status(409)
           .json({ error: "This basket type already exist for this user" });
@@ -29,7 +29,13 @@ exports.createBasket = async (req, res) => {
     } else {
       return res.status(409).json({ error: "Too much basket for this user" });
     }
-  } catch (err) {}
+  } catch (err) {
+    console.error(
+      "🚀 ~ file: basketController.js:15 ~ exports.getBasket= ~ err:",
+      err
+    );
+    return res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 exports.getBasket = async (req, res) => {
@@ -41,7 +47,7 @@ exports.getBasket = async (req, res) => {
     }
     return res.status(200).json(basket);
   } catch (err) {
-    console.log(
+    console.error(
       "🚀 ~ file: basketController.js:15 ~ exports.getBasket= ~ err:",
       err
     );
@@ -66,11 +72,11 @@ exports.updateBasket = async (req, res) => {
     ); //new true return new user
     return res.status(200).json(updatedBasket);
   } catch (err) {
-    console.log(
+    console.error(
       "🚀 ~ file: basketController.js:40 ~ exports.updateBasket= ~ err:",
       err
     );
-    return res.status(500).json({ error: "Errore del server" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -81,9 +87,10 @@ exports.deleteBasket = async (req, res) => {
     if (Object.is(basket, null)) {
       return res.status(404).json({ error: "Basket not found" });
     }
+    await basketModel.findByIdAndDelete(basketId);
     return res.status(200).json({ description: "Basket deleted" });
   } catch (err) {
-    console.log(
+    console.error(
       "🚀 ~ file: basketController.js:57 ~ exports.deleteBasket ~ err:",
       err
     );
@@ -94,7 +101,11 @@ exports.deleteBasket = async (req, res) => {
 exports.basketsList = async (req, res) => {
   try {
     const userId = req.query.userId;
-    if (Object.is(basket, null)) {
+    console.log(
+      "🚀 ~ file: basketController.js:103 ~ exports.basketsList= ~ userId:",
+      userId
+    );
+    if (Object.is(userId, undefined) || Object.is(userId, null)) {
       let baskets = await basketModel.find({});
       return res.status(200).json(baskets);
     } else {
@@ -102,10 +113,10 @@ exports.basketsList = async (req, res) => {
       return res.status(200).json(baskets);
     }
   } catch (err) {
-    console.log(
+    console.error(
       "🚀 ~ file: basketController.js:67 ~ exports.basketsList= ~ err:",
       err
     );
-    return res.status(500).json({ error: "Errore del server" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
