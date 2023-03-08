@@ -47,7 +47,7 @@
  *         wasteWeight: 4
  *         createdAt: 2020-03-10T04:05:06.157Z
  */
-
+const auth = require("../middleware/auth");
 const controller = require("../controllers/withdrawalController");
 
 module.exports = (server) => {
@@ -69,5 +69,5 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/api/withdrawals").get(controller.withdrawalList);
+  server.route("/api/withdrawals").get(auth, controller.withdrawalList);
 };

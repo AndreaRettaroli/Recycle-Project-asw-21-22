@@ -1,8 +1,6 @@
 /**
  * @swagger
  * tags:
- *   name: Access
- *   description: Signup and Login user APIs
  *   name: User
  *   description: User APIs
  * @swagger
@@ -68,40 +66,9 @@
  *         createdAt: 2020-03-10T04:05:06.157Z
  *         updatedAt: 2023-03-10T04:05:06.157Z
  */
-
+const auth = require("../middleware/auth");
 const controller = require("../controllers/userController");
-
 module.exports = (server) => {
-  /**
-   * @swagger
-   * /api/signup:
-   *   post:
-   *     summary: Signup user
-   *     tags: [Access]
-   *     responses:
-   *       200:
-   *         description: User correct signup
-   *       409:
-   *         description: Email already used
-   *       500:
-   *         description: Internal server error
-   */
-  server.route("/api/signup").post(controller.signup);
-
-  /**
-   * @swagger
-   * /api/login:
-   *   post:
-   *     summary: Login user
-   *     tags: [Access]
-   *     responses:
-   *       200:
-   *         description: User correct login
-   *       500:
-   *         description: Internal server error
-   */
-  server.route("/api/login").post(controller.login);
-
   /**
    * @swagger
    * /api/user:
@@ -125,7 +92,7 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/api/user").get(controller.getUser);
+  server.route("/api/user").get(auth, controller.getUser);
   /**
    * @swagger
    * /api/user:
@@ -158,7 +125,7 @@ module.exports = (server) => {
    *         description: Internal server error
    *
    */
-  server.route("/api/user").put(controller.updateUser);
+  server.route("/api/user").put(auth, controller.updateUser);
   /**
    * @swagger
    * /api/user:
@@ -180,7 +147,7 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/api/user").delete(controller.deleteUser);
+  server.route("/api/user").delete(auth, controller.deleteUser);
   /**
    * @swagger
    * /api/users:
@@ -199,5 +166,5 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/api/users").get(controller.usersList);
+  server.route("/api/users").get(auth, controller.usersList);
 };

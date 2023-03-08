@@ -37,7 +37,7 @@
  *         createdAt: 2020-03-10T04:05:06.157Z
  *         updatedAt: 2023-03-10T04:05:06.157Z
  */
-
+const auth = require("../middleware/auth");
 const controller = require("../controllers/priceController");
 
 module.exports = (server) => {
@@ -59,7 +59,7 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/api/price").post(controller.createPrice);
+  server.route("/api/price").post(auth, controller.createPrice);
   /**
    * @swagger
    * /api/price:
@@ -85,7 +85,7 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/api/price").get(controller.getPrice);
+  server.route("/api/price").get(auth, controller.getPrice);
 
   /**
    * @swagger
@@ -119,7 +119,7 @@ module.exports = (server) => {
    *          description: Internal server error
 
    */
-  server.route("/api/price").put(controller.updatePrice);
+  server.route("/api/price").put(auth, controller.updatePrice);
   /**
    * @swagger
    * /api/price:
@@ -141,7 +141,7 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/api/basket").delete(controller.deletePrice);
+  server.route("/api/basket").delete(auth, controller.deletePrice);
   /**
    * @swagger
    * /api/prices:
@@ -160,5 +160,5 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/api/baskets").get(controller.pricesList);
+  server.route("/api/baskets").get(auth, controller.pricesList);
 };

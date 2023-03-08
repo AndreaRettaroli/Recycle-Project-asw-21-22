@@ -46,7 +46,7 @@
  *         createdAt: 2020-03-10T04:05:06.157Z
  *         updatedAt: 2023-03-10T04:05:06.157Z
  */
-
+const auth = require("../middleware/auth");
 const controller = require("../controllers/basketController");
 
 module.exports = (server) => {
@@ -70,7 +70,7 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/api/basket").post(controller.createBasket);
+  server.route("/api/basket").post(auth, controller.createBasket);
   /**
    * @swagger
    * /api/basket:
@@ -96,7 +96,7 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/api/basket").get(controller.getBasket);
+  server.route("/api/basket").get(auth, controller.getBasket);
 
   /**
    * @swagger
@@ -130,7 +130,7 @@ module.exports = (server) => {
    *          description: Internal server error
 
    */
-  server.route("/api/basket").put(controller.updateBasket);
+  server.route("/api/basket").put(auth, controller.updateBasket);
   /**
    * @swagger
    * /api/basket:
@@ -152,7 +152,7 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/api/basket").delete(controller.deleteBasket);
+  server.route("/api/basket").delete(auth, controller.deleteBasket);
   /**
    * @swagger
    * /api/baskets:
@@ -178,5 +178,5 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/api/baskets").get(controller.basketsList);
+  server.route("/api/baskets").get(auth, controller.basketsList);
 };
