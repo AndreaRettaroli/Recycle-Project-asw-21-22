@@ -1,31 +1,5 @@
 const userModel = require("../models/userModel");
 
-exports.signup = async (req, res) => {
-  try {
-    console.log("🚀 ~ file: userController.js:10 ~ req.body:", req.body);
-    const { email } = req.body;
-    let user = await userModel.findOne({ email: email });
-    if (!Object.is(user, null)) {
-      return res.status(409).json({ error: "Email already used" });
-    }
-    const newUser = new userModel({
-      ...req.body,
-      role: "user",
-      createdAt: new Date().toISOString(),
-    });
-    await newUser.save();
-    return res.status(200).json(newUser);
-  } catch (err) {
-    console.error(
-      "🚀 ~ file: userController.js:21 ~ exports.signup= ~ err:",
-      err
-    );
-    return res.status(500).json({ error: "Internal server error" });
-  }
-};
-
-exports.login = async (req, res) => {};
-
 exports.getUser = async (req, res) => {
   try {
     const userId = req.query.id;

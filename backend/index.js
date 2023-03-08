@@ -21,7 +21,9 @@ const basketRoutes = require("./routes/basketRoute");
 const acquisitionRoutes = require("./routes/acquisitionRoute");
 const priceRoutes = require("./routes/priceRoute");
 const withdrawalRoutes = require("./routes/withdrawalRoute");
+const authRoutes = require("./routes/authRoute");
 
+authRoutes(server);
 userRoutes(server);
 basketRoutes(server);
 acquisitionRoutes(server);
