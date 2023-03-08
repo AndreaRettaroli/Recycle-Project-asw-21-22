@@ -17,3 +17,14 @@ Swagger is available at http://localhost:3000/
 
 for more info follow [this guide](https://blog.logrocket.com/documenting-express-js-api-swagger/).
 
+# JWT
+To create a token key use the following code:
+````
+const crypto= require('crypto')
+var tokenKey=crypto.randomBytes(64).toString('hex')
+console.log(tokenKey)
+````
+for more info follow [this guide](https://www.digitalocean.com/community/tutorials/nodejs-jwt-expressjs) or read [this article](https://medium.com/@prashantramnyc/authenticate-rest-apis-in-node-js-using-jwt-json-web-tokens-f0e97669aad3)
+
+The docs [jwt.io](https://jwt.io/)
+
