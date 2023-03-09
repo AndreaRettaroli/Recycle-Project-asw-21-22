@@ -55,6 +55,8 @@ module.exports = (server) => {
    * @swagger
    * /api/acquisitions:
    *   get:
+   *     security:
+   *        - bearerAuth: []
    *     summary: Get a list of acquisitions
    *     tags: [Acquisition]
    *     responses:
@@ -66,6 +68,8 @@ module.exports = (server) => {
    *               type: array
    *               items:
    *                 $ref: '#/components/schemas/Acquisition'
+   *       401:
+   *         description: Access token is missing or invalid
    *       500:
    *         description: Internal server error
    */

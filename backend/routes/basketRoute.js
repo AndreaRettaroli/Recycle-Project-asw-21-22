@@ -54,6 +54,8 @@ module.exports = (server) => {
    * @swagger
    * /api/basket:
    *   post:
+   *     security:
+   *        - bearerAuth: []
    *     summary: Create a trash basket
    *     tags: [Basket]
    *     requestBody:
@@ -65,6 +67,8 @@ module.exports = (server) => {
    *     responses:
    *       200:
    *         description: Trash basket correctly created
+   *       401:
+   *         description: Access token is missing or invalid
    *       409:
    *         description: Too much trash baskets
    *       500:
@@ -75,6 +79,8 @@ module.exports = (server) => {
    * @swagger
    * /api/basket:
    *   get:
+   *     security:
+   *        - bearerAuth: []
    *     summary: Get basket info from id
    *     tags: [Basket]
    *     parameters:
@@ -91,6 +97,8 @@ module.exports = (server) => {
    *          application/json:
    *            schema:
    *              $ref: '#/components/schemas/Basket'
+   *       401:
+   *         description: Access token is missing or invalid
    *       404:
    *          description: The basket was not found
    *       500:
@@ -102,6 +110,8 @@ module.exports = (server) => {
    * @swagger
    * /api/basket:
    *   put:
+   *     security:
+   *        - bearerAuth: []
    *     summary: Update basket by id
    *     tags: [Basket]
    *     parameters:
@@ -118,15 +128,17 @@ module.exports = (server) => {
    *           schema:
    *             $ref: '#/components/schemas/Basket'
    *     responses:
-   *        200:
+   *       200:
    *          description: The trash basket was updated
    *          content:
    *            application/json:
    *              schema:
    *                $ref: '#/components/schemas/Basket'
-   *        404:
+   *       401:
+   *         description: Access token is missing or invalid
+   *       404:
    *          description: The basket was not found
-   *        500:
+   *       500:
    *          description: Internal server error
 
    */
@@ -135,6 +147,8 @@ module.exports = (server) => {
    * @swagger
    * /api/basket:
    *   delete:
+   *     security:
+   *        - bearerAuth: []
    *     summary: Remove basket by id
    *     tags: [Basket]
    *     parameters:
@@ -147,6 +161,8 @@ module.exports = (server) => {
    *     responses:
    *       200:
    *         description: The basket was deleted
+   *       401:
+   *         description: Access token is missing or invalid
    *       404:
    *         description: The basket was not found
    *       500:
@@ -157,6 +173,8 @@ module.exports = (server) => {
    * @swagger
    * /api/baskets:
    *   get:
+   *     security:
+   *        - bearerAuth: []
    *     summary: Get a list of basket
    *     tags: [Basket]
    *     parameters:
@@ -175,6 +193,8 @@ module.exports = (server) => {
    *               type: array
    *               items:
    *                 $ref: '#/components/schemas/Basket'
+   *       401:
+   *         description: Access token is missing or invalid
    *       500:
    *         description: Internal server error
    */

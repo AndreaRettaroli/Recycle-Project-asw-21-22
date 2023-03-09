@@ -38,10 +38,6 @@ const options = {
       version: "0.1.0",
       description:
         "This Recycle Project APIs application made with Express and documented with Swagger",
-      license: {
-        name: "MIT",
-        url: "https://spdx.org/licenses/MIT.html",
-      },
       contact: {
         name: "Andrea Rettaroli",
         url: "",

@@ -1,5 +1,18 @@
 /**
  * @swagger
+ *# 1) Define the security scheme type (HTTP bearer)
+ *components:
+ *  securitySchemes:
+ *    bearerAuth:            # arbitrary name for the security scheme
+ *      type: http
+ *      scheme: bearer
+ *      bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+ *# 2) Apply the security globally to all operations
+ *security:
+ *  - bearerAuth: []         # use the same name as above
+ *
+ *
+ * @swagger
  * tags:
  *   name: User
  *   description: User APIs
@@ -53,6 +66,9 @@
  *           type: string
  *           format: date
  *           description: The date when the user was update
+ *         token:
+ *           type: string
+ *           description: The user access token
  *       example:
  *         _id: 64023aac471e5c26eccd26bd
  *         name: Andrea
@@ -65,6 +81,8 @@
  *         role: user
  *         createdAt: 2020-03-10T04:05:06.157Z
  *         updatedAt: 2023-03-10T04:05:06.157Z
+ *
+ *
  */
 const auth = require("../middleware/auth");
 const controller = require("../controllers/userController");
@@ -73,6 +91,8 @@ module.exports = (server) => {
    * @swagger
    * /api/user:
    *   get:
+   *     security:
+   *        - bearerAuth: []
    *     summary: Get user by id
    *     tags: [User]
    *     parameters:
@@ -89,6 +109,8 @@ module.exports = (server) => {
    *          application/json:
    *            schema:
    *              $ref: '#/components/schemas/User'
+   *       401:
+   *         description: Access token is missing or invalid
    *       500:
    *         description: Internal server error
    */
@@ -97,6 +119,8 @@ module.exports = (server) => {
    * @swagger
    * /api/user:
    *   put:
+   *     security:
+   *        - bearerAuth: []
    *     summary: Update user by id
    *     tags: [User]
    *     parameters:
@@ -113,15 +137,17 @@ module.exports = (server) => {
    *           schema:
    *             $ref: '#/components/schemas/User'
    *     responses:
-   *        200:
+   *       200:
    *          description: The user was updated
    *          content:
    *            application/json:
    *              schema:
    *                $ref: '#/components/schemas/User'
-   *        404:
-   *          description: The user was not found
-   *        500:
+   *       401:
+   *         description: Access token is missing or invalid
+   *       404:
+   *         description: The user was not found
+   *       500:
    *         description: Internal server error
    *
    */
@@ -130,6 +156,8 @@ module.exports = (server) => {
    * @swagger
    * /api/user:
    *   delete:
+   *     security:
+   *        - bearerAuth: []
    *     summary: Remove user by id
    *     tags: [User]
    *     parameters:
@@ -142,6 +170,8 @@ module.exports = (server) => {
    *     responses:
    *       200:
    *         description: The user was deleted
+   *       401:
+   *         description: Access token is missing or invalid
    *       404:
    *         description: The user was not found
    *       500:
@@ -152,6 +182,8 @@ module.exports = (server) => {
    * @swagger
    * /api/users:
    *   get:
+   *     security:
+   *        - bearerAuth: []
    *     summary: Get a list of users
    *     tags: [User]
    *     responses:
@@ -163,6 +195,8 @@ module.exports = (server) => {
    *               type: array
    *               items:
    *                 $ref: '#/components/schemas/User'
+   *       401:
+   *         description: Access token is missing or invalid
    *       500:
    *         description: Internal server error
    */

@@ -45,6 +45,8 @@ module.exports = (server) => {
    * @swagger
    * /api/price:
    *   post:
+   *     security:
+   *        - bearerAuth: []
    *     summary: Create a waste type Price
    *     tags: [Price]
    *     requestBody:
@@ -56,6 +58,8 @@ module.exports = (server) => {
    *     responses:
    *       200:
    *         description: Price correctly created
+   *       401:
+   *         description: Access token is missing or invalid
    *       500:
    *         description: Internal server error
    */
@@ -64,6 +68,8 @@ module.exports = (server) => {
    * @swagger
    * /api/price:
    *   get:
+   *     security:
+   *        - bearerAuth: []
    *     summary: Get Price info from id
    *     tags: [Price]
    *     parameters:
@@ -80,8 +86,10 @@ module.exports = (server) => {
    *          application/json:
    *            schema:
    *              $ref: '#/components/schemas/Price'
+   *       401:
+   *         description: Access token is missing or invalid
    *       404:
-   *          description: The price was not found
+   *         description: The price was not found
    *       500:
    *         description: Internal server error
    */
@@ -91,6 +99,8 @@ module.exports = (server) => {
    * @swagger
    * /api/price:
    *   put:
+   *     security:
+   *        - bearerAuth: []
    *     summary: Update price by id
    *     tags: [Price]
    *     parameters:
@@ -107,16 +117,18 @@ module.exports = (server) => {
    *           schema:
    *             $ref: '#/components/schemas/Price'
    *     responses:
-   *        200:
+   *       200:
    *          description: The price was updated
    *          content:
    *            application/json:
    *              schema:
    *                $ref: '#/components/schemas/Price'
-   *        404:
-   *          description: The price was not found
-   *        500:
-   *          description: Internal server error
+   *       401:
+   *         description: Access token is missing or invalid
+   *       404:
+   *         description: The price was not found
+   *       500:
+   *         description: Internal server error
 
    */
   server.route("/api/price").put(auth, controller.updatePrice);
@@ -124,6 +136,8 @@ module.exports = (server) => {
    * @swagger
    * /api/price:
    *   delete:
+   *     security:
+   *        - bearerAuth: []
    *     summary: Remove price by id
    *     tags: [Price]
    *     parameters:
@@ -136,6 +150,8 @@ module.exports = (server) => {
    *     responses:
    *       200:
    *         description: The price was deleted
+   *       401:
+   *         description: Access token is missing or invalid
    *       404:
    *         description: The price was not found
    *       500:
@@ -146,6 +162,8 @@ module.exports = (server) => {
    * @swagger
    * /api/prices:
    *   get:
+   *     security:
+   *        - bearerAuth: []
    *     summary: Get a list of prices
    *     tags: [Price]
    *     responses:
@@ -157,6 +175,8 @@ module.exports = (server) => {
    *               type: array
    *               items:
    *                 $ref: '#/components/schemas/Price'
+   *       401:
+   *         description: Access token is missing or invalid
    *       500:
    *         description: Internal server error
    */

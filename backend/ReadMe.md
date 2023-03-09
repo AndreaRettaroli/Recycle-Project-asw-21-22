@@ -17,6 +17,8 @@ Swagger is available at http://localhost:3000/
 
 for more info follow [this guide](https://blog.logrocket.com/documenting-express-js-api-swagger/).
 
+For authentication use jwt token returned after login or signin without specify Bearer before.
+
 # JWT
 To create a token key use the following code:
 ````
