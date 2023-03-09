@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "recycle-project-backend",
   "version": "1.0.0",
   "description": "The backend of Recycle Project",
   "main": "index.js",
