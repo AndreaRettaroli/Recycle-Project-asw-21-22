@@ -16,7 +16,7 @@ For swagger i used the following packages:
 Swagger is available at http://localhost:3000/
 
 for more info follow [this guide](https://blog.logrocket.com/documenting-express-js-api-swagger/).
-
+♠
 For authentication use jwt token returned after login or signin without specify Bearer before.
 
 # JWT
@@ -30,3 +30,11 @@ for more info follow [this guide](https://www.digitalocean.com/community/tutoria
 
 The docs [jwt.io](https://jwt.io/)
 
+# Tests
+
+I used [Mocha](https://mochajs.org/) with [Chai](https://www.chaijs.com/) and [SuperTest](https://github.com/ladjs/supertest#readme).
+
+To run test use:
+````
+    npm run test
+````
