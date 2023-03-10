@@ -65,3 +65,5 @@ const socket = io(httpServer, {
   },
 });
 socketHandler(socket);
+
+module.exports = server;
