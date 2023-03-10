@@ -4,7 +4,7 @@
   "description": "The backend of Recycle Project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha tests/*.js"
   },
   "keywords": [],
   "author": "Andrea Rettaroli",
@@ -18,5 +18,11 @@
     "socket.io": "^4.6.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.2"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "chai-http": "^4.3.0",
+    "mocha": "^10.2.0",
+    "supertest": "^6.3.3"
   }
 }
