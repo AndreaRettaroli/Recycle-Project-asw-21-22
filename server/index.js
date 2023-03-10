@@ -2,6 +2,7 @@ const io = require("socket.io");
 const { socketHandler } = require("./middleware/socket");
 const dotenv = require("dotenv");
 dotenv.config();
+const cors = require("cors");
 
 const mongoose = require("mongoose");
 
@@ -12,6 +13,7 @@ mongoose
 
 const express = require("express");
 const server = express();
+server.use(cors());
 server.use(express.json());
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsdoc = require("swagger-jsdoc");
@@ -54,11 +56,16 @@ const options = {
 };
 
 const specs = swaggerJsdoc(options);
-server.use("/", swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
-
+server.use("/", swaggerUi.serve, swaggerUi.setup(specs));
+server.use(
+  cors({
+    origin: "*",
+  })
+);
 const httpServer = server.listen(process.env.PORT, () => {
   console.log(`Listening on http://localhost:${process.env.PORT}`);
 });
+
 const socket = io(httpServer, {
   cors: {
     origin: "*",
