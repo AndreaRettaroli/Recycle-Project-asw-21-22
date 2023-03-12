@@ -1,30 +1,51 @@
 import React, { FC } from "react";
 import { useForm, Resolver } from "react-hook-form";
-import api from "../api/Request";
-
-interface LoginFormData {
-  email: string;
-  password: string;
-}
+import { RootState } from "../redux/store";
+import api from "../api/Api";
+import { setAuthUser } from "../redux/user.slice";
+import { useSelector, useDispatch } from "react-redux";
+import { Credentials } from "../types/Credentials";
+import { getBaskets } from "../redux/baskets.slice";
+import { useNavigate } from "react-router-dom";
 
 const Login: FC = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state: RootState) => state.user.user);
+  console.log("🚀 ~ file: Login.tsx:33 ~ login ~ user:", user);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormData>({
+  } = useForm<Credentials>({
     email: "",
     password: "",
   });
 
-  const onSubmit = (data: LoginFormData) => {
+  const onSubmit = (data: Credentials) => {
     console.log(data);
     login(data);
   };
 
-  const login = async (data: LoginFormData) => {
+  const login = async (data: Credentials) => {
     const response = await api.post("/api/login", data);
-    console.log("🚀 ~ file: Login.tsx:26 ~ login ~ response:", response);
+    if (response.status === 200) {
+      dispatch(setAuthUser(response.data));
+      console.log(
+        "🚀 ~ file: Login.tsx:34 ~ login ~ response.data:",
+        response.data
+      );
+      dispatch(getBaskets(response.data._id, response.data.token));
+      navigate("/home");
+    }
+    // console.log("🚀 ~ file: Login.tsx:26 ~ login ~ response:", response);
+    // const res = await api.get("/api/user", {
+    //   params: { id: "64023aac471e5c26eccd26bd1" },
+    //   headers: {
+    //     Authorization: `Bearer ${user?.token}`,
+    //   },
+    // });
+    // console.log("🚀 ~ file: Login.tsx:38 ~ login ~ res:", res);
   };
 
   return (
