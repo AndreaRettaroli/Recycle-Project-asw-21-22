@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { ThunkAction } from "@reduxjs/toolkit";
-import {  RootState } from "./store";
+import { RootState } from "./store";
 import { User } from '../types/User';
 
 
@@ -46,16 +46,3 @@ export const setAuthUser = (user: User): ThunkAction<void, RootState, unknown, a
 }
 
 
-// /**
-//  *  Azione che ottiene i dati relativi ad un utente
-//  */
-// export const getUser = (): ThunkAction<void, RootState, unknown, any> => {
-//     return async (dispatch: AppDispatch) => {
-//         try {
-//             const response = await API.get('/user');
-//             dispatch(setUser(response.data));
-//         } catch (err) {
-//             throw new Error(err.message);
-//         }
-//     };
-// };

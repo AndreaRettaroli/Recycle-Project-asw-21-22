@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ThunkAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { User } from '../types/User';
-import api from '../api/Api';
+import Api from '../api/Api';
 
 interface Basket {
     _id: string
@@ -49,7 +49,7 @@ export default basketsSlice.reducer;
 export const getBaskets = (userId: string, token: string): ThunkAction<void, RootState, unknown, any> => {
     return async dispatch => {
         try {
-            const response = await api.get("/api/baskets", {
+            const response = await Api.get("/api/baskets", {
                 params: { userId: userId },
                 headers: {
                     Authorization: `Bearer ${token}`,
