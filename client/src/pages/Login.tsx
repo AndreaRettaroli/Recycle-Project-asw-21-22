@@ -2,10 +2,10 @@ import React, { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { RootState } from "../redux/store";
 import Api from "../api/Api";
-import { setAuthUser } from "../redux/user.slice";
+import { getLoggedUser, setAuthUser } from "../redux/user.slice";
 import { useSelector, useDispatch } from "react-redux";
 import { Credentials } from "../types/Credentials";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useUserSession from "../hooks/useUserSession";
 
 const Login: FC = () => {
@@ -14,25 +14,10 @@ const Login: FC = () => {
 
   const { isLoggedIn, loggedUser, login, logout } = useUserSession();
 
-  const getLoggedUser = async () => {
-    console.log(
-      "🚀 ~ file: Login.tsx:19 ~ getLoggedUser ~  id: loggedUser.userId :",
-      loggedUser.userId
-    );
-    const response = await Api.get("/api/user", {
-      params: { id: loggedUser.userId },
-    });
-    if (response.status === 200) {
-      dispatch(setAuthUser(response.data));
-      navigate("/home");
-    } else {
-      logout();
-    }
-  };
-
   useEffect(() => {
     if (isLoggedIn) {
-      getLoggedUser();
+      dispatch(getLoggedUser(loggedUser.userId));
+      navigate("/home");
     }
   }, [isLoggedIn]);
 
@@ -111,6 +96,7 @@ const Login: FC = () => {
           </button>
         </div>
       </form>
+      <Link to={"/signup"}>Sign Up</Link>
     </div>
   );
 };

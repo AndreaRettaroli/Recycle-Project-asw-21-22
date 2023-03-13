@@ -3,12 +3,14 @@ import { RootState } from "../redux/store";
 import Loading from "../components/UI/Loading";
 import { useSelector, useDispatch } from "react-redux";
 import { getBaskets } from "../redux/baskets.slice";
-import { redirect } from "react-router-dom";
+import { getLoggedUser } from "../redux/user.slice";
 import useUserSession from "../hooks/useUserSession";
+import Navbar from "../components/UI/Navbar";
 
 const Home: FC = () => {
   const dispatch = useDispatch();
   const { isLoggedIn, loggedUser } = useUserSession();
+
   const fetchedData = useSelector(
     (state: RootState) => state.baskets.fetchedData
   );
@@ -16,14 +18,17 @@ const Home: FC = () => {
   const user = useSelector((state: RootState) => state.user.user);
   console.log("🚀 ~ file: Home.tsx:13 ~ user:", user);
   useEffect(() => {
-    if (isLoggedIn) {
-      if (!fetchedData) {
-        dispatch(getBaskets(loggedUser.userId, loggedUser.token));
-      }
-    } else {
-      redirect("/");
+    console.log(
+      "🚀 ~ file: Home.tsx:21 ~ useEffect ~ isLoggedIn && !user:",
+      isLoggedIn && !user
+    );
+    if (isLoggedIn && !user) {
+      dispatch(getLoggedUser(loggedUser.userId));
     }
-  });
+    if (!fetchedData && isLoggedIn) {
+      dispatch(getBaskets(loggedUser.userId, loggedUser.token));
+    }
+  }, [fetchedData, isLoggedIn, user]);
 
   console.log("🚀 ~ file: Home.tsx:19 ~ baskets:", baskets);
   return (
@@ -39,6 +44,7 @@ const Home: FC = () => {
           <li>Add</li>
         </ul>
       )}
+      <Navbar />
     </div>
   );
 };
