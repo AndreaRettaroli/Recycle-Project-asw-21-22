@@ -38,8 +38,7 @@ export const Signup: FC = () => {
     province: "",
     language: "",
   });
-  const onSubmit = async (data: SignUpFormInput, event: Event) => {
-    event.preventDefault();
+  const onSubmit = (data: SignUpFormInput) => {
     signup(data);
   };
 
