@@ -1,18 +1,43 @@
-import React, { FC } from "react";
-import { useForm, Resolver } from "react-hook-form";
+import React, { FC, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { RootState } from "../redux/store";
-import api from "../api/Api";
+import Api from "../api/Api";
 import { setAuthUser } from "../redux/user.slice";
 import { useSelector, useDispatch } from "react-redux";
 import { Credentials } from "../types/Credentials";
-import { getBaskets } from "../redux/baskets.slice";
 import { useNavigate } from "react-router-dom";
+import useUserSession from "../hooks/useUserSession";
 
 const Login: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { isLoggedIn, loggedUser, login, logout } = useUserSession();
+
+  const getLoggedUser = async () => {
+    console.log(
+      "🚀 ~ file: Login.tsx:19 ~ getLoggedUser ~  id: loggedUser.userId :",
+      loggedUser.userId
+    );
+    const response = await Api.get("/api/user", {
+      params: { id: loggedUser.userId },
+    });
+    if (response.status === 200) {
+      dispatch(setAuthUser(response.data));
+      navigate("/home");
+    } else {
+      logout();
+    }
+  };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      getLoggedUser();
+    }
+  }, [isLoggedIn]);
+
   const user = useSelector((state: RootState) => state.user.user);
-  console.log("🚀 ~ file: Login.tsx:33 ~ login ~ user:", user);
+
   const {
     register,
     handleSubmit,
@@ -24,28 +49,20 @@ const Login: FC = () => {
 
   const onSubmit = (data: Credentials) => {
     console.log(data);
-    login(data);
+    userLogin(data);
   };
 
-  const login = async (data: Credentials) => {
-    const response = await api.post("/api/login", data);
-    if (response.status === 200) {
-      dispatch(setAuthUser(response.data));
-      console.log(
-        "🚀 ~ file: Login.tsx:34 ~ login ~ response.data:",
-        response.data
-      );
-      dispatch(getBaskets(response.data._id, response.data.token));
-      navigate("/home");
+  const userLogin = async (data: Credentials) => {
+    try {
+      const response = await Api.post("/api/login", data);
+      if (response.status === 200) {
+        dispatch(setAuthUser(response.data));
+        login(response.data.token, response.data._id);
+        navigate("/home");
+      }
+    } catch (err) {
+      console.error("🚀 ~ file: Login.tsx:64 ~ userLogin ~ err:", err);
     }
-    // console.log("🚀 ~ file: Login.tsx:26 ~ login ~ response:", response);
-    // const res = await api.get("/api/user", {
-    //   params: { id: "64023aac471e5c26eccd26bd1" },
-    //   headers: {
-    //     Authorization: `Bearer ${user?.token}`,
-    //   },
-    // });
-    // console.log("🚀 ~ file: Login.tsx:38 ~ login ~ res:", res);
   };
 
   return (
@@ -62,7 +79,7 @@ const Login: FC = () => {
             type="email"
             placeholder="Enter your email"
             {...register("email", { required: true })}
-          />{" "}
+          />
           {errors.email && (
             <p className="text-red-500 text-sm">{errors.email.message}</p>
           )}
@@ -90,7 +107,7 @@ const Login: FC = () => {
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
           >
-            Sign In
+            Login
           </button>
         </div>
       </form>
