@@ -24,9 +24,7 @@ const useUserSession = (): UserSession => {
             const { token, userId } = JSON.parse(userSession);
             setLoggedUser({ token, userId });
             setIsLoggedIn(true);
-        } else {
-            navigate("/")
-        }
+        } 
     }, []);
 
     const login = (token: string, userId: string) => {
@@ -42,7 +40,7 @@ const useUserSession = (): UserSession => {
         sessionStorage.removeItem("userSession");
         setLoggedUser({ token: "", userId: "" });
         setIsLoggedIn(false);
-        navigate("/")
+        navigate("/login")
     };
 
     return {
