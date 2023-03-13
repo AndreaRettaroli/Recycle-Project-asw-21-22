@@ -6,18 +6,18 @@ import { User } from '../types/User';
 import api from '../api/Api';
 
 interface Basket {
-    _id: String
-    userId: String
-    type: String
-    dimension: Number,
-    filling: Number,
+    _id: string
+    userId: string
+    type: string
+    dimension: number,
+    filling: number,
     createdAt: Date,
     updatedAt: Date | null,
 }
 
 
 interface BasketsState {
-    fetchedData: Boolean,
+    fetchedData: boolean,
     baskets: Basket[] | null;
 }
 
@@ -46,7 +46,7 @@ export const { setBaskets, clearBaskets } = basketsSlice.actions;
 
 export default basketsSlice.reducer;
 
-export const getBaskets = (userId: String, token: String): ThunkAction<void, RootState, unknown, any> => {
+export const getBaskets = (userId: string, token: string): ThunkAction<void, RootState, unknown, any> => {
     return async dispatch => {
         try {
             const response = await api.get("/api/baskets", {

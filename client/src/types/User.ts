@@ -1,15 +1,15 @@
 export interface User {
-    _id: String,
-    _v: Number,
-    name: String;
-    surname: String;
-    email: String;
-    password: String;
-    address: String;
-    province: String;
-    language: String;
-    role: String;
-    token: String;
+    _id: string,
+    _v: number,
+    name: string;
+    surname: string;
+    email: string;
+    password: string;
+    address: string;
+    province: string;
+    language: string;
+    role: string;
+    token: string;
     createdAt: Date;
     updatedAt: Date | null;
 }
