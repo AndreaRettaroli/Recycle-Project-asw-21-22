@@ -7,6 +7,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { Credentials } from "../types/Credentials";
 import { Link, useNavigate } from "react-router-dom";
 import useUserSession from "../hooks/useUserSession";
+import Button from "../components/UI/Button";
+import Card from "../components/UI/Card";
+import FormInput from "../components/UI/FormInput";
+import logo from "../assets/recycleLogo.jpg";
 
 const Login: FC = () => {
   const dispatch = useDispatch();
@@ -51,52 +55,37 @@ const Login: FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <form className="w-full max-w-sm" onSubmit={handleSubmit(onSubmit)}>
-        <h1 className="text-3xl font-bold mb-6">Login</h1>
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
-            Email
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="email"
+    <div className="flex-container login">
+      <Card>
+        <img src={logo} width="80px" alt="recycle-logo" />
+        <h1 className="text-3xl font-bold mb-6 text-center">Login</h1>
+        <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
+          <FormInput
+            propsName={"email"}
+            label={"Email"}
             type="email"
-            placeholder="Enter your email"
-            {...register("email", { required: true })}
+            register={{
+              ...register("email", { required: "This field is required" }),
+            }}
+            placeholder={"Enter your email"}
+            error={errors?.email}
           />
-          {errors.email && (
-            <p className="text-red-500 text-sm">{errors.email.message}</p>
-          )}
-        </div>
-        <div className="mb-4">
-          <label
-            htmlFor="password"
-            className="block text-gray-700 font-bold mb-2"
-          >
-            Password
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="password"
+          <FormInput
+            propsName={"password"}
+            label={"Password"}
             type="password"
-            placeholder="Enter your password"
-            {...register("password", { required: true })}
-          />{" "}
-          {errors.password && (
-            <p className="text-red-500 text-sm">{errors.password.message}</p>
-          )}
-        </div>
-        <div className="flex items-center justify-between">
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-          >
-            Login
-          </button>
-        </div>
-      </form>
-      <Link to={"/signup"}>Sign Up</Link>
+            register={{
+              ...register("password", { required: "This field is required" }),
+            }}
+            placeholder={"Enter your password"}
+            error={errors?.password}
+          />
+          <Button type={"submit"}>Login</Button>
+        </form>
+        <Link className="m-auto underline" to={"/signup"}>
+          Sign Up
+        </Link>
+      </Card>
     </div>
   );
 };
