@@ -10,7 +10,7 @@ import useUserSession from "../hooks/useUserSession";
 import Button from "../components/UI/Button";
 import Card from "../components/UI/Card";
 import FormInput from "../components/UI/FormInput";
-import logo from "../assets/recycleLogo.jpg";
+import logo from "/recycleLogo.jpg";
 
 const Login: FC = () => {
   const dispatch = useDispatch();
@@ -55,7 +55,7 @@ const Login: FC = () => {
   };
 
   return (
-    <div className="flex-container login">
+    <div className="flex-container">
       <Card>
         <img src={logo} width="80px" alt="recycle-logo" />
         <h1 className="text-3xl font-bold mb-6 text-center">Login</h1>

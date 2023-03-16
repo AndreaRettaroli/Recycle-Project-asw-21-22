@@ -8,14 +8,16 @@ interface Props {
   placeholder: string;
   type?: React.HTMLInputTypeAttribute | undefined;
   error: FieldError | undefined;
+  defaultValue?: any;
 }
 const FormInput: FC<Props> = ({
   propsName,
-  label,
   placeholder,
+  label,
   type = "text",
   register,
   error,
+  defaultValue,
 }) => {
   return (
     <div className="mb-4">
@@ -28,6 +30,7 @@ const FormInput: FC<Props> = ({
         type={type}
         placeholder={placeholder}
         {...register}
+        defaultValue={defaultValue}
       />
       {error && <p className="text-red-500 text-sm">{error.message}</p>}
     </div>
