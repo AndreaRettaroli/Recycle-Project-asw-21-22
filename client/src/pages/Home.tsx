@@ -6,6 +6,9 @@ import { getBaskets } from "../redux/baskets.slice";
 import { getLoggedUser } from "../redux/user.slice";
 import useUserSession from "../hooks/useUserSession";
 import Navbar from "../components/UI/Navbar";
+import Basket from "../components/Basket";
+import Card from "../components/UI/Card";
+import BasketButton from "../components/BasketButton";
 
 const Home: FC = () => {
   const dispatch = useDispatch();
@@ -32,20 +35,27 @@ const Home: FC = () => {
 
   console.log("🚀 ~ file: Home.tsx:19 ~ baskets:", baskets);
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline">Your Baskets!</h1>
+    <>
+      <Navbar title={"Your Baskets!"} />
       {!fetchedData ? (
         <Loading />
       ) : (
-        <ul>
-          {baskets?.map((basket, index) => (
-            <li key={"basket-" + index}>{basket._id}</li>
-          ))}
-          <li>Add</li>
-        </ul>
+        <div className="flex-container">
+          <Card>
+            <div className="grid-container">
+              {baskets?.map((basket, index) => (
+                <Basket
+                  key={"basket-" + index}
+                  basket={basket}
+                  color={"green"}
+                />
+              ))}
+              <BasketButton />
+            </div>
+          </Card>
+        </div>
       )}
-      <Navbar />
-    </div>
+    </>
   );
 };
 
