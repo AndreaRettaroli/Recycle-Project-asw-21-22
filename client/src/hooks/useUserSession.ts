@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+interface userData {
+    userId: string;
+    token: string
+}
+
 interface UserSession {
     isLoggedIn: boolean;
-    userData: {
-        id: string;
-        token: string
-    }
+    loggedUser: userData
+    login: (token: string, userId: string) => void
+    logout: () => void
 
 }
 
@@ -24,7 +28,7 @@ const useUserSession = (): UserSession => {
             const { token, userId } = JSON.parse(userSession);
             setLoggedUser({ token, userId });
             setIsLoggedIn(true);
-        } 
+        }
     }, []);
 
     const login = (token: string, userId: string) => {
