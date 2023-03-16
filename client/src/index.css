@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 #root {
-  height: 100vh;
+  height: 110vh;
 }
 
 @layer components {
@@ -24,11 +24,12 @@
     @apply p-4;
     @apply flex justify-center items-center flex-col;
   }
-  .login {
-    @apply w-5/6 lg:w-2/6 md:w-3/6 xxl:w-1/6 min-w-300;
-  }
   .flex-container {
     @apply m-auto h-full;
-    @apply flex justify-center items-center;
+    @apply flex flex-col justify-center items-center gap-8;
+    @apply w-5/6  sm:max-xl:w-3/6 xl:w-2/6 min-w-300;
+  }
+  .grid-container {
+    @apply grid gap-0 grid-cols-1 sm:grid-cols-2 sm:gap-2;
   }
 }
