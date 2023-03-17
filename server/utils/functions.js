@@ -7,10 +7,10 @@ const priceModel = require("../models/priceModel");
 const WasteType = [
   "PLASTIC",
   "GLASS",
-  "ALUMINIUM",
+  "METALS",
   "ORGANIC",
   "PAPER",
-  "UNDIFFERENTIATED",
+  "MIXED",
 ];
 
 const putAcquisition = async ({

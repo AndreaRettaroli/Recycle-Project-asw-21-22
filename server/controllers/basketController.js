@@ -1,6 +1,6 @@
 const basketModel = require("../models/basketModel");
 
-const MAXIMUM_BASKET_PER_USER = 5;
+const MAXIMUM_BASKET_PER_USER = 6;
 
 exports.createBasket = async (req, res) => {
   try {

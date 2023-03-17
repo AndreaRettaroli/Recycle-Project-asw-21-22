@@ -4,14 +4,7 @@ const acquisitionModel = require("../models/acquisitionModel");
 
 const Utils = require("../utils/functions");
 
-const WasteType = [
-  "PLASTIC",
-  "GLASS",
-  "ALUMINIUM",
-  "ORGANIC",
-  "PAPER",
-  "UNDIFFERENTIATED",
-];
+const WasteType = ["PLASTIC", "GLASS", "METALS", "ORGANIC", "PAPER", "MIXED"];
 
 const PUT_TRASH = "put_trash";
 const REMOVE_TRASH = "remove_trash";
