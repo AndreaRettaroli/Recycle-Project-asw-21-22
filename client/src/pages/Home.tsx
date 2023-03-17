@@ -9,6 +9,7 @@ import Navbar from "../components/UI/Navbar";
 import Basket from "../components/Basket";
 import Card from "../components/UI/Card";
 import BasketButton from "../components/BasketButton";
+import { colors } from "../constants/colors";
 
 const Home: FC = () => {
   const dispatch = useDispatch();
@@ -40,17 +41,17 @@ const Home: FC = () => {
       {!fetchedData ? (
         <Loading />
       ) : (
-        <div className="flex-container">
+        <div className="w-4/5 flex-container">
           <Card>
-            <div className="grid-container">
+            <div className="home-grid-container">
               {baskets?.map((basket, index) => (
                 <Basket
                   key={"basket-" + index}
                   basket={basket}
-                  color={"green"}
+                  color={colors.filter((x) => x.type === basket.type)[0].color}
                 />
               ))}
-              <BasketButton />
+              {baskets?.length < 6 && <BasketButton />}
             </div>
           </Card>
         </div>
