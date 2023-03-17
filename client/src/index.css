@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 #root {
-  height: 110vh;
+  height: 110vh; /**/
+  min-height: 100%;
+  height: auto !important; /* cross-browser */
 }
 
 @layer components {
@@ -25,11 +27,17 @@
     @apply flex justify-center items-center flex-col;
   }
   .flex-container {
-    @apply m-auto h-full;
+    @apply m-auto h-full mt-28;
     @apply flex flex-col justify-center items-center gap-8;
     @apply w-5/6  sm:max-xl:w-3/6 xl:w-2/6 min-w-300;
   }
   .grid-container {
-    @apply grid gap-0 grid-cols-1 sm:grid-cols-2 sm:gap-2;
+    @apply grid gap-2 grid-cols-1 sm:grid-cols-2 sm:gap-2;
+  }
+  .chart-container {
+    @apply w-4/5 h-64;
+  }
+  .home-grid-container {
+    @apply grid gap-2 grid-cols-1 sm:grid-cols-3 sm:gap-2;
   }
 }
