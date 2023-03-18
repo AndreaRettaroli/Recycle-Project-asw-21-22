@@ -45,7 +45,7 @@ const AddBasket: FC = () => {
                 htmlFor={"type"}
                 className="block text-gray-700 font-bold mb-2"
               >
-                Type of basket:
+                Type of basket
               </label>
               <select
                 className="shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -65,7 +65,7 @@ const AddBasket: FC = () => {
                 htmlFor={"dimension"}
                 className="block text-gray-700 font-bold mb-2"
               >
-                Dimension:
+                Dimension
               </label>
               <select
                 id="dimension"

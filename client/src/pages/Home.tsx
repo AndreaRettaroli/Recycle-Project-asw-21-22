@@ -37,7 +37,7 @@ const Home: FC = () => {
   console.log("🚀 ~ file: Home.tsx:19 ~ baskets:", baskets);
   return (
     <>
-      <Navbar title={"Your Baskets!"} />
+      <Navbar title="Your Baskets" />
       {!fetchedData ? (
         <Loading />
       ) : (
