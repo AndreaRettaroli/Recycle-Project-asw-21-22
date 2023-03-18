@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AnyAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { ThunkAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
@@ -49,13 +49,17 @@ export const basketsSlice = createSlice({
             state.fetchedData = false
         },
         updateBaskets: (state, action: PayloadAction<Basket>) => {
-            state.baskets = [...state.baskets?.splice(state.baskets.findIndex(basket => basket._id === action.payload._id), 0, action.payload)]
+            state.baskets?.splice(state.baskets.findIndex(basket => basket._id === action.payload._id), 0, action.payload)
+            state.fetchedData = true
+        },
+        removeBasket: (state, action: PayloadAction<String>) => {
+            state.baskets?.splice(state.baskets.findIndex(basket => basket._id === action.payload), 1)
             state.fetchedData = true
         }
     },
 });
 
-export const { setBaskets, clearBaskets, setUnfetched, addBasket, updateBaskets } = basketsSlice.actions;
+export const { setBaskets, clearBaskets, setUnfetched, addBasket, updateBaskets, removeBasket } = basketsSlice.actions;
 
 export default basketsSlice.reducer;
 
@@ -96,8 +100,6 @@ export const createBasket = (data: any): ThunkAction<void, RootState, unknown, a
 }
 
 
-
-
 export const updateBasket = (data: Basket): ThunkAction<void, RootState, unknown, any> => {
     console.log("🚀 ~ file: baskets.slice.ts:76 ~ createBasket ~ data:", data)
     return async dispatch => {
@@ -110,8 +112,21 @@ export const updateBasket = (data: Basket): ThunkAction<void, RootState, unknown
             }
         } catch (err) {
             console.error("🚀 ~ file: baskets.slice.ts:114 ~ updateBasket ~ err:", err)
+        }
+    }
+}
 
-
+export const deleteBasket = (basketId: string): ThunkAction<void, RootState, unknown, AnyAction> => {
+    return async dispatch => {
+        dispatch(setUnfetched())
+        try {
+            const response = await Api.delete("/api/basket", { params: { id: basketId } })
+            console.log("🚀 ~ file: baskets.slice.ts:109 ~ deleteBasket ~ response:", response)
+            if (response.status === 200 && !response.data.error) {
+                dispatch(removeBasket(basketId))
+            }
+        } catch (err) {
+            console.error("🚀 ~ file: baskets.slice.ts:129 ~ deleteBasket ~ err:", err)
         }
     }
 }
