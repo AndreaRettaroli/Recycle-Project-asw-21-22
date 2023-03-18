@@ -22,7 +22,6 @@ const Navbar: FC<Props> = ({ title }) => {
               textDecoration: isActive ? "underline" : "none",
               color: isActive ? "#13ce66" : "#000000",
             })}
-            exact
           >
             Home
           </NavLink>
@@ -30,7 +29,6 @@ const Navbar: FC<Props> = ({ title }) => {
         <li>
           <NavLink
             to="/statistics"
-            exact
             style={({ isActive }) => ({
               fontWeight: isActive ? "Bolder" : "none",
               textDecoration: isActive ? "underline" : "none",
@@ -48,7 +46,6 @@ const Navbar: FC<Props> = ({ title }) => {
               textDecoration: isActive ? "underline" : "none",
               color: isActive ? "#13ce66" : "#000000",
             })}
-            exact
           >
             Profile
           </NavLink>
