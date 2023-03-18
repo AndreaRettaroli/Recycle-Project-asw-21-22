@@ -4,8 +4,8 @@ export interface Basket {
     type: BasketTypes//"PLASTIC" | "ORGANIC" | "PAPER" | "GLASS" | "METALS" | "MIXED"
     dimension: BasketDimensions
     filling: number
-    createdAt: Date | null
-    updatedAt: Date | undefined | null
+    createdAt: Date
+    updatedAt?: Date
 }
 
 export enum BasketTypes {

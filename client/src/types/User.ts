@@ -11,5 +11,5 @@ export interface User {
     role: string;
     token: string;
     createdAt: Date;
-    updatedAt: Date | null;
+    updatedAt?: Date
 }
