@@ -21,7 +21,7 @@ const Basket: FC<Props> = (props) => {
   return (
     <Card>
       <Link to={`/basket-details/${props.basket._id}`}>
-        <div className=" flex w-full sm:w-48 h-48 flex-col justify-between items-center">
+        <div className=" flex w-48 h-48 flex-col justify-between items-center">
           <div>
             <h3 className="text-1xl font-bold mb-2 text-center">
               {props.basket.type}

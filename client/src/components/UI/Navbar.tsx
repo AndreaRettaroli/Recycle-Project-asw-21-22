@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import react, { FC } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "/recycleLogo.jpg";
 
@@ -8,12 +8,12 @@ interface Props {
 
 const Navbar: FC<Props> = ({ title }) => {
   return (
-    <nav className="shadow-header w-full flex items-center justify-between p-1 top-0 absolute bg-white">
+    <nav className="shadow-header w-full flex flex-col sm:flex-row items-center justify-between p-1 fixed bottom-0 sm:top-0 sm:bottom-auto sm:top-auto bg-white">
       <div className="sm:flex sm:items-center hidden">
         <img src={logo} width="80px" alt="recycle-logo" />
         <h1 className="text-3xl font-bold">{title}</h1>
       </div>
-      <ul className="inline-flex gap-8 items-center mr-16">
+      <ul className="inline-flex gap-8 items-center sm:mr-16">
         <li>
           <NavLink
             to="/home"

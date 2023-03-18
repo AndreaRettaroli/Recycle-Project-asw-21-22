@@ -27,7 +27,7 @@
     @apply flex justify-center items-center flex-col;
   }
   .flex-container {
-    @apply m-auto h-full mt-28;
+    @apply m-auto h-full mb-28 sm:mt-28 sm:mb-4;
     @apply flex flex-col justify-center items-center gap-8;
     @apply w-5/6  sm:max-xl:w-3/6 xl:w-2/6 min-w-300;
   }
