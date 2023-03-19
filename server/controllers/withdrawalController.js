@@ -5,14 +5,14 @@ exports.withdrawalList = async (req, res) => {
     const userId = req.query.userId;
     const basketId = req.query.basketId;
     const basketType = req.query.basketType;
-    if (!Object.is(userId, undefined) || !Object.is(userId, null)) {
+    if (!Object.is(userId, undefined) && !Object.is(userId, null)) {
       let withdrawals = await withdrawalModel.find({ userId: userId });
       return res.status(200).json(withdrawals);
-    } else if (!Object.is(basketId, undefined) || !Object.is(basketId, null)) {
+    } else if (!Object.is(basketId, undefined) && !Object.is(basketId, null)) {
       let withdrawals = await withdrawalModel.find({ basketId: basketId });
       return res.status(200).json(withdrawals);
     } else if (
-      !Object.is(basketType, undefined) ||
+      !Object.is(basketType, undefined) &&
       !Object.is(basketType, null)
     ) {
       let withdrawals = await withdrawalModel.find({ basketType: basketType });
