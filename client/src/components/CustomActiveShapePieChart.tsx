@@ -1,14 +1,31 @@
-import React, { PureComponent } from "react";
-import { PieChart, Pie, Sector, ResponsiveContainer } from "recharts";
+import React, { PureComponent, useState } from "react";
+import {
+  PieChart,
+  Pie,
+  Sector,
+  ResponsiveContainer,
+  PieChartProps,
+  Cell,
+} from "recharts";
+import { colors } from "../constants/colors";
 
-const data = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-];
+interface Data {
+  name: string;
+  value: number;
+}
 
-const renderActiveShape = (props) => {
+// const data: Data[] = [
+//   { name: "Group A", value: 400 },
+//   { name: "Group B", value: 300 },
+//   { name: "Group C", value: 300 },
+//   { name: "Group D", value: 200 },
+// ];
+
+interface Props extends PieChartProps {
+  data: Data[];
+}
+
+const renderActiveShape = (props: any) => {
   const RADIAN = Math.PI / 180;
   const {
     cx,
@@ -35,7 +52,8 @@ const renderActiveShape = (props) => {
 
   return (
     <g>
-      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={"#333"}>
+        {/**or fill={fill} to have chars color in the center text*/}
         {payload.name}
       </text>
       <Sector
@@ -67,7 +85,7 @@ const renderActiveShape = (props) => {
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
-      >{`PV ${value}`}</text>
+      >{`Income ${value}`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -75,44 +93,43 @@ const renderActiveShape = (props) => {
         textAnchor={textAnchor}
         fill="#999"
       >
-        {`(Rate ${(percent * 100).toFixed(2)}%)`}
+        {`Rate ${(percent * 100).toFixed(2)}%`}
       </text>
     </g>
   );
 };
 
-export default class Example1 extends PureComponent {
-  static demoUrl =
-    "https://codesandbox.io/s/pie-chart-with-customized-active-shape-y93si";
+const DoughnutChart: React.FC<Props> = ({ data }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  state = {
-    activeIndex: 0,
+  const onPieEnter = (_: any, index: any) => {
+    setActiveIndex(index);
   };
 
-  onPieEnter = (_: any, index: any) => {
-    this.setState({
-      activeIndex: index,
-    });
-  };
+  return (
+    <ResponsiveContainer width="100%" height="100%">
+      <PieChart width={400} height={400}>
+        <Pie
+          activeIndex={activeIndex}
+          activeShape={renderActiveShape}
+          data={data}
+          cx="50%"
+          cy="50%"
+          innerRadius={60}
+          outerRadius={80}
+          fill="#8884d8"
+          dataKey="value"
+          onMouseEnter={onPieEnter}
+        >
+          {data.map((entry, index) => (
+            <Cell
+              fill={colors.filter((item) => item.type === entry.name)[0].color}
+            />
+          ))}
+        </Pie>
+      </PieChart>
+    </ResponsiveContainer>
+  );
+};
 
-  render() {
-    return (
-      <ResponsiveContainer width="100%" height="100%">
-        <PieChart width={400} height={400}>
-          <Pie
-            activeIndex={this.state.activeIndex}
-            activeShape={renderActiveShape}
-            data={data}
-            cx="50%"
-            cy="50%"
-            innerRadius={60}
-            outerRadius={80}
-            fill="#8884d8"
-            dataKey="value"
-            onMouseEnter={this.onPieEnter}
-          />
-        </PieChart>
-      </ResponsiveContainer>
-    );
-  }
-}
+export default DoughnutChart;
