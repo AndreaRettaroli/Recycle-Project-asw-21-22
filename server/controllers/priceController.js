@@ -1,5 +1,7 @@
 const priceModel = require("../models/priceModel");
 
+const WasteType = ["PLASTIC", "GLASS", "METALS", "ORGANIC", "PAPER", "MIXED"];
+
 exports.createPrice = async (req, res) => {
   try {
     const { wasteType, value } = req.body;
@@ -28,18 +30,21 @@ exports.createPrice = async (req, res) => {
 exports.getPrice = async (req, res) => {
   try {
     const priceId = req.query.id;
-    //const wasteType = req.query.wasteType;
-    //let price = null;
-    //if (!Object.is(priceId, undefined)) {
-    let price = await priceModel.findById(priceId);
-    //}
-    // if (!Object.is(wasteType, undefined)) {
-    //   price = await priceModel.find({ wasteType: wasteType });
-    // }
-    if (Object.is(price, null)) {
-      return res.status(404).json({ error: "Price not found" });
+    const wasteType = req.query.wasteType;
+    let price = null;
+    if (!Object.is(priceId, undefined)) {
+      price = await priceModel.findById(priceId);
+    } else if (
+      !Object.is(wasteType, undefined) &&
+      WasteType.includes(wasteType.toUpperCase())
+    ) {
+      price = await priceModel.find({ wasteType: wasteType });
     }
-    return res.status(200).json(price);
+    if (Object.is(price, null) || price.length == 0) {
+      return res.status(404).json({ error: "Price not found" });
+    } else {
+      return res.status(200).json(price);
+    }
   } catch (err) {
     console.error(
       "🚀 ~ file: priceController.js:37 ~ exports.getPrice= ~ err:",
@@ -55,7 +60,7 @@ exports.updatePrice = async (req, res) => {
     const newPrice = { ...req.body, updatedAt: new Date().toISOString() };
     let price = await priceModel.findById(priceId);
     if (Object.is(price, null)) {
-      return res.status(404).json({ error: "Basket not found" });
+      return res.status(404).json({ error: "price not found" });
     }
     const updatedPrice = await priceModel.findByIdAndUpdate(priceId, newPrice, {
       new: true,
@@ -75,10 +80,10 @@ exports.deletePrice = async (req, res) => {
     const priceId = req.query.id;
     let price = await priceModel.findById(priceId);
     if (Object.is(price, null)) {
-      return res.status(404).json({ error: "Basket not found" });
+      return res.status(404).json({ error: "price not found" });
     }
     await priceModel.findByIdAndDelete(priceId);
-    return res.status(200).json({ description: "Basket deleted" });
+    return res.status(200).json({ description: "price deleted" });
   } catch (err) {
     console.error(
       "🚀 ~ file: priceController.js:83 ~ exports.deletePrice ~ err:",
