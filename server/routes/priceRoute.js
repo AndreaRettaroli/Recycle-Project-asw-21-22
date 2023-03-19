@@ -157,7 +157,7 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/api/basket").delete(auth, controller.deletePrice);
+  server.route("/api/price").delete(auth, controller.deletePrice);
   /**
    * @swagger
    * /api/prices:
@@ -180,5 +180,5 @@ module.exports = (server) => {
    *       500:
    *         description: Internal server error
    */
-  server.route("/api/baskets").get(auth, controller.pricesList);
+  server.route("/api/prices").get(auth, controller.pricesList);
 };
