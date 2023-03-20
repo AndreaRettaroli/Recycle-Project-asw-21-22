@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import Loading from "../components/UI/Loading";
 import Api from "../api/Api";
 import { BasketTypes } from "../types/Basket";
+import CustomShapeBarChart from "../components/CustomShapeBarChart";
 
 const Statistics: FC = () => {
   const dispatch = useDispatch();
@@ -20,24 +21,30 @@ const Statistics: FC = () => {
   const [withdrawalsList, setWithdrawalsList] = useState<Withdrawal[]>([]);
   const [doughnutData, setDoughnutData] = useState([]);
   const [lineData, setLineData] = useState([]);
-  const [areaData, setAreaData] = useState([]);
+  const [barData, setBarData] = useState([]);
 
-  const generateAreaData = (data: any[]) => {
-    const calculatedData = data.map((item) => {
-      return {
-        name: item?.basketType,
-        wasteValue: item?.wasteValue,
-        wasteWaight: item?.wasteWeight,
-      };
-    });
-    setAreaData([...calculatedData]);
+  const generateBarData = (data: any[]) => {
+    let defaultData = [
+      { name: BasketTypes.GLASS, acquisitionsNumber: 0 },
+      { name: BasketTypes.ORGANIC, acquisitionsNumber: 0 },
+      { name: BasketTypes.MIXED, acquisitionsNumber: 0 },
+      { name: BasketTypes.METALS, acquisitionsNumber: 0 },
+      { name: BasketTypes.PLASTIC, acquisitionsNumber: 0 },
+      { name: BasketTypes.PAPER, acquisitionsNumber: 0 },
+    ];
+    const calculatedData = defaultData
+      .map((item) => item.name)
+      .map((name) => {
+        return {
+          name: name,
+          acquisitionsNumber: data.filter((item) => item?.wasteType === name)
+            .length,
+        };
+      });
+    setBarData([...calculatedData]);
   };
 
   const generateLineData = (data: any[]) => {
-    console.log(
-      "🚀 ~ file: Statistics.tsx:25 ~ generateLineData ~ data:",
-      data
-    );
     let defaultData = [
       { name: BasketTypes.GLASS, wasteValue: 0, wasteWaight: 0 },
       { name: BasketTypes.ORGANIC, wasteValue: 0, wasteWaight: 0 },
@@ -62,18 +69,11 @@ const Statistics: FC = () => {
             .reduce((partialSum, value) => partialSum + value, 0),
         };
       });
-    console.log(
-      "🚀 ~ file: Statistics.tsx:37 ~ generateDoughnutData ~ d:",
-      calculatedData
-    );
+
     setLineData([...calculatedData]);
   };
 
   const generateDoughnutData = (data: any[]) => {
-    console.log(
-      "🚀 ~ file: Statistics.tsx:26 ~ generateDoughnutData ~ data:",
-      data
-    );
     let defaultData = [
       { name: BasketTypes.GLASS, value: 0 },
       { name: BasketTypes.ORGANIC, value: 0 },
@@ -94,10 +94,7 @@ const Statistics: FC = () => {
             .reduce((partialSum, value) => partialSum + value, 0),
         };
       });
-    console.log(
-      "🚀 ~ file: Statistics.tsx:37 ~ generateDoughnutData ~ d:",
-      calculatedData
-    );
+
     setDoughnutData([...calculatedData]);
   };
 
@@ -115,7 +112,7 @@ const Statistics: FC = () => {
         setAcquisitionsList(res[1].data);
         generateDoughnutData(res[0].data);
         generateLineData(res[0].data);
-        generateAreaData(res[0].data);
+        generateBarData(res[1].data);
         setIsLoading(false);
       }
     } catch (err) {
@@ -168,7 +165,7 @@ const Statistics: FC = () => {
             </Card>
             <Card>
               <div className="chart-container">
-                <AreaChart data={areaData} />
+                <CustomShapeBarChart data={barData} />
               </div>
             </Card>
             <Card>

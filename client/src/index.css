@@ -35,7 +35,7 @@
     @apply grid gap-2 grid-cols-1 sm:grid-cols-2 sm:gap-2;
   }
   .chart-container {
-    @apply w-4/5 h-64;
+    @apply w-full h-64;
   }
   .home-grid-container {
     @apply grid gap-2 grid-cols-1 sm:grid-cols-3 sm:gap-2;
