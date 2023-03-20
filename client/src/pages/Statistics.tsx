@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
-import Example from "../components/LineChart";
+import LineChart from "../components/LineChart";
 import DoughnutChart from "../components/CustomActiveShapePieChart";
-import AreaCart from "../components/StackedAreaChart";
+import AreaChart from "../components/StackedAreaChart";
 import Card from "../components/UI/Card";
 import Navbar from "../components/UI/Navbar";
 import { Acquisition } from "../types/Acquisition";
@@ -19,6 +19,55 @@ const Statistics: FC = () => {
   const [acquisitionsList, setAcquisitionsList] = useState<Acquisition[]>([]);
   const [withdrawalsList, setWithdrawalsList] = useState<Withdrawal[]>([]);
   const [doughnutData, setDoughnutData] = useState([]);
+  const [lineData, setLineData] = useState([]);
+  const [areaData, setAreaData] = useState([]);
+
+  const generateAreaData = (data: any[]) => {
+    const calculatedData = data.map((item) => {
+      return {
+        name: item?.basketType,
+        wasteValue: item?.wasteValue,
+        wasteWaight: item?.wasteWeight,
+      };
+    });
+    setAreaData([...calculatedData]);
+  };
+
+  const generateLineData = (data: any[]) => {
+    console.log(
+      "🚀 ~ file: Statistics.tsx:25 ~ generateLineData ~ data:",
+      data
+    );
+    let defaultData = [
+      { name: BasketTypes.GLASS, wasteValue: 0, wasteWaight: 0 },
+      { name: BasketTypes.ORGANIC, wasteValue: 0, wasteWaight: 0 },
+      { name: BasketTypes.MIXED, wasteValue: 0, wasteWaight: 0 },
+      { name: BasketTypes.METALS, wasteValue: 0, wasteWaight: 0 },
+      { name: BasketTypes.PLASTIC, wasteValue: 0, wasteWaight: 0 },
+      { name: BasketTypes.PAPER, wasteValue: 0, wasteWaight: 0 },
+    ];
+
+    const calculatedData = defaultData
+      .map((item) => item.name)
+      .map((name) => {
+        return {
+          name: name,
+          wasteValue: data
+            .filter((item) => item?.basketType === name)
+            .map((item) => item?.wasteValue)
+            .reduce((partialSum, value) => partialSum + value, 0),
+          wasteWeight: data
+            .filter((item) => item?.basketType === name)
+            .map((item) => item?.wasteWeight)
+            .reduce((partialSum, value) => partialSum + value, 0),
+        };
+      });
+    console.log(
+      "🚀 ~ file: Statistics.tsx:37 ~ generateDoughnutData ~ d:",
+      calculatedData
+    );
+    setLineData([...calculatedData]);
+  };
 
   const generateDoughnutData = (data: any[]) => {
     console.log(
@@ -33,18 +82,6 @@ const Statistics: FC = () => {
       { name: BasketTypes.PLASTIC, value: 0 },
       { name: BasketTypes.PAPER, value: 0 },
     ];
-
-    const filteredDate = data.filter(
-      (item) => item?.wasteType === BasketTypes.PLASTIC
-    );
-    const mapped = filteredDate.map((item) => item?.basketType);
-    const reduced = mapped.reduce((partialSum, value) => partialSum + value, 0);
-    console.log(
-      "🚀 ~ file: Statistics.tsx:38 ~ generateDoughnutData ~ filteredDate:",
-      filteredDate,
-      mapped,
-      reduced
-    );
 
     const calculatedData = defaultData
       .map((item) => item.name)
@@ -77,6 +114,8 @@ const Statistics: FC = () => {
         setWithdrawalsList(res[0].data);
         setAcquisitionsList(res[1].data);
         generateDoughnutData(res[0].data);
+        generateLineData(res[0].data);
+        generateAreaData(res[0].data);
         setIsLoading(false);
       }
     } catch (err) {
@@ -124,12 +163,12 @@ const Statistics: FC = () => {
             </Card>
             <Card>
               <div className="chart-container">
-                <Example />
+                <LineChart data={lineData} />
               </div>
             </Card>
             <Card>
               <div className="chart-container">
-                <AreaCart />
+                <AreaChart data={areaData} />
               </div>
             </Card>
             <Card>

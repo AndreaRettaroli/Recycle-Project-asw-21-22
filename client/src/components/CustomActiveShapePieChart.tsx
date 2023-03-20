@@ -14,13 +14,6 @@ interface Data {
   value: number;
 }
 
-// const data: Data[] = [
-//   { name: "Group A", value: 400 },
-//   { name: "Group B", value: 300 },
-//   { name: "Group C", value: 300 },
-//   { name: "Group D", value: 200 },
-// ];
-
 interface Props extends PieChartProps {
   data: Data[];
 }
@@ -85,7 +78,7 @@ const renderActiveShape = (props: any) => {
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
-      >{`Income ${value}`}</text>
+      >{`Income ${value}$`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -108,21 +101,22 @@ const DoughnutChart: React.FC<Props> = ({ data }) => {
 
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <PieChart width={400} height={400}>
+      <PieChart width={500} height={400}>
         <Pie
           activeIndex={activeIndex}
           activeShape={renderActiveShape}
           data={data}
           cx="50%"
           cy="50%"
-          innerRadius={60}
-          outerRadius={80}
+          innerRadius={50}
+          outerRadius={70}
           fill="#8884d8"
           dataKey="value"
           onMouseEnter={onPieEnter}
         >
           {data.map((entry, index) => (
             <Cell
+              key={"cell-" + index}
               fill={colors.filter((item) => item.type === entry.name)[0].color}
             />
           ))}
