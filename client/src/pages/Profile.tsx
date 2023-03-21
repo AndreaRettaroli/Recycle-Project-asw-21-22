@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from "react";
 import Navbar from "../components/UI/Navbar";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import { AppDispatch, RootState } from "../redux/store";
 import { clearUser, getLoggedUser, updateUser } from "../redux/user.slice";
 import useUserSession from "../hooks/useUserSession";
 import { useForm } from "react-hook-form";
@@ -22,7 +22,7 @@ interface SignUpFormInput {
 }
 
 const Profile: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.user.user);
   const { isLoggedIn, loggedUser, logout } = useUserSession();
 

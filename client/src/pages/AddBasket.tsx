@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react";
-import { RootState } from "../redux/store";
+import { AppDispatch, RootState } from "../redux/store";
 import Loading from "../components/UI/Loading";
 import { useSelector, useDispatch } from "react-redux";
 import Navbar from "../components/UI/Navbar";
@@ -17,7 +17,7 @@ interface AddBasketFormInput {
 }
 
 const AddBasket: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user.user);
   const {

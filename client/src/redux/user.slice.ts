@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AnyAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { ThunkAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
@@ -34,7 +34,7 @@ export const { setUser, clearUser } = userSlice.actions;
 export default userSlice.reducer;
 
 
-export const setAuthUser = (user: User): ThunkAction<void, RootState, unknown, any> => {
+export const setAuthUser = (user: User): ThunkAction<void, RootState, unknown, AnyAction> => {
     return async dispatch => {
         try {
             console.log("🚀 ~ file: user.slice.ts:48 ~ setAuthUser ~ user:", user)
@@ -47,7 +47,7 @@ export const setAuthUser = (user: User): ThunkAction<void, RootState, unknown, a
 }
 
 
-export const getLoggedUser = (userId: string): ThunkAction<void, RootState, unknown, any> => {
+export const getLoggedUser = (userId: string): ThunkAction<void, RootState, unknown, AnyAction> => {
     return async dispatch => {
         try {
             console.log("🚀 ~ file: user.slice.ts:50 ~ getLoggedUser ~ userId:", userId)
@@ -66,7 +66,7 @@ export const getLoggedUser = (userId: string): ThunkAction<void, RootState, unkn
     }
 };
 
-export const updateUser = (data: User): ThunkAction<void, RootState, unknown, any> => {
+export const updateUser = (data: User): ThunkAction<void, RootState, unknown, AnyAction> => {
     return async dispatch => {
         try {
             const response = await Api.put("/api/user",

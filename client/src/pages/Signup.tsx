@@ -7,6 +7,7 @@ import Button from "../components/UI/Button";
 import Card from "../components/UI/Card";
 import FormInput from "../components/UI/FormInput";
 import useUserSession from "../hooks/useUserSession";
+import { AppDispatch } from "../redux/store";
 import { setAuthUser } from "../redux/user.slice";
 import logo from "/recycleLogo.jpg";
 
@@ -22,7 +23,7 @@ interface SignUpFormInput {
 }
 
 export const Signup: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   const { isLoggedIn, loggedUser, login, logout } = useUserSession();

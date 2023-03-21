@@ -11,7 +11,7 @@ import Navbar from "../components/UI/Navbar";
 import { colors } from "../constants/colors";
 import useUserSession from "../hooks/useUserSession";
 import { deleteBasket, getBaskets, updateBasket } from "../redux/baskets.slice";
-import { RootState } from "../redux/store";
+import { AppDispatch, RootState } from "../redux/store";
 import { Basket as BasketModel, BasketDimensions } from "../types/Basket";
 
 interface UpdateBasketFormInput {
@@ -23,7 +23,7 @@ const BasketDetails: FC = () => {
   const { isLoggedIn, loggedUser } = useUserSession();
 
   console.log("🚀 ~ file: BasketDetails.tsx:14 ~ basketId:", basketId);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const fetchedData = useSelector(
     (state: RootState) => state.baskets.fetchedData
@@ -36,7 +36,7 @@ const BasketDetails: FC = () => {
 
   useEffect(() => {
     if (!fetchedData && isLoggedIn && !basket) {
-      dispatch(getBaskets(loggedUser.userId, loggedUser.token));
+      dispatch(getBaskets(loggedUser.userId));
       //setBasket(baskets?.filter((basket) => basket._id === basketId)[0]);
     }
   }, [fetchedData, isLoggedIn, basket]);

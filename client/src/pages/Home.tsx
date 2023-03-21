@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react";
-import { RootState } from "../redux/store";
+import { AppDispatch, RootState } from "../redux/store";
 import Loading from "../components/UI/Loading";
 import { useSelector, useDispatch } from "react-redux";
 import { getBaskets } from "../redux/baskets.slice";
@@ -12,7 +12,7 @@ import BasketButton from "../components/BasketButton";
 import { colors } from "../constants/colors";
 
 const Home: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { isLoggedIn, loggedUser } = useUserSession();
 
   const fetchedData = useSelector(
@@ -30,7 +30,7 @@ const Home: FC = () => {
       dispatch(getLoggedUser(loggedUser.userId));
     }
     if (!fetchedData && isLoggedIn) {
-      dispatch(getBaskets(loggedUser.userId, loggedUser.token));
+      dispatch(getBaskets(loggedUser.userId));
     }
   }, [fetchedData, isLoggedIn, user]);
 

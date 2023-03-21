@@ -1,12 +1,5 @@
 import React, { PureComponent, useState } from "react";
-import {
-  PieChart,
-  Pie,
-  Sector,
-  ResponsiveContainer,
-  PieChartProps,
-  Cell,
-} from "recharts";
+import { PieChart, Pie, Sector, ResponsiveContainer, Cell } from "recharts";
 import { colors } from "../constants/colors";
 
 interface Data {
@@ -14,7 +7,7 @@ interface Data {
   value: number;
 }
 
-interface Props extends PieChartProps {
+interface Props {
   data: Data[];
 }
 
@@ -78,7 +71,7 @@ const renderActiveShape = (props: any) => {
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
-      >{`Income ${value}$`}</text>
+      >{`Income ${value.toFixed(2)}$`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}

@@ -27,7 +27,7 @@ const Basket: FC<Props> = (props) => {
               {props.basket.type}
             </h3>
             <p className="text-center">
-              {props.basket.filling + "/" + props.basket.dimension}
+              {props.basket.filling + "/" + props.basket.dimension +" Kg"}
             </p>
           </div>
           <div

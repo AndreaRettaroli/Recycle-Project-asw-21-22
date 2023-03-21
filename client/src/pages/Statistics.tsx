@@ -13,15 +13,29 @@ import Api from "../api/Api";
 import { BasketTypes } from "../types/Basket";
 import CustomShapeBarChart from "../components/CustomShapeBarChart";
 
+interface BarData {
+  name: BasketTypes;
+  acquisitionsNumber: number;
+}
+interface LineData {
+  name: BasketTypes;
+  wasteValue: number;
+  wasteWeight: number;
+}
+
+interface DoughnutData {
+  name: BasketTypes;
+  value: number;
+}
+
 const Statistics: FC = () => {
-  const dispatch = useDispatch();
   const { isLoggedIn, loggedUser } = useUserSession();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [acquisitionsList, setAcquisitionsList] = useState<Acquisition[]>([]);
   const [withdrawalsList, setWithdrawalsList] = useState<Withdrawal[]>([]);
-  const [doughnutData, setDoughnutData] = useState([]);
-  const [lineData, setLineData] = useState([]);
-  const [barData, setBarData] = useState([]);
+  const [doughnutData, setDoughnutData] = useState<DoughnutData[]>([]);
+  const [lineData, setLineData] = useState<LineData[]>([]);
+  const [barData, setBarData] = useState<BarData[]>([]);
 
   const generateBarData = (data: any[]) => {
     let defaultData = [

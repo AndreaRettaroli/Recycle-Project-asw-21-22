@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { RootState } from "../redux/store";
+import { AppDispatch, RootState } from "../redux/store";
 import Api from "../api/Api";
 import { getLoggedUser, setAuthUser } from "../redux/user.slice";
 import { useSelector, useDispatch } from "react-redux";
@@ -13,7 +13,7 @@ import FormInput from "../components/UI/FormInput";
 import logo from "/recycleLogo.jpg";
 
 const Login: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   const { isLoggedIn, loggedUser, login, logout } = useUserSession();
