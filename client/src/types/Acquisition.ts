@@ -10,3 +10,20 @@ export interface Acquisition {
     createdAt: Date
     updatedAt?: Date
 }
+
+export interface PutRequest {
+    userId: string
+    basketId: string
+    wasteName: string
+    wasteType: BasketTypes
+    wasteWeight: number
+}
+
+export interface RemoveRequest {
+    acquisitionId: string
+}
+
+export interface ClearRequest {
+    userId: string
+    basketId: string
+}

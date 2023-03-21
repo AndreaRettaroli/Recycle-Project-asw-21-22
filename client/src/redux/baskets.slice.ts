@@ -1,4 +1,4 @@
-import { AnyAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Action, AnyAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { ThunkAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
@@ -6,6 +6,8 @@ import { User } from '../types/User';
 import Api from '../api/Api';
 import { AddBasket } from '../pages';
 import { BasketDimensions, BasketTypes } from '../types/Basket';
+import { ClearRequest, PutRequest } from '../types/Acquisition';
+
 
 interface Basket {
     _id: string
@@ -33,7 +35,6 @@ export const basketsSlice = createSlice({
     initialState,
     reducers: {
         setBaskets: (state, action: PayloadAction<Basket[]>) => {
-            console.log("🚀 ~ file: baskets.store.ts:33 ~ action.payload:", action.payload)
             state.baskets = action.payload;
             state.fetchedData = true;
         },
@@ -49,21 +50,48 @@ export const basketsSlice = createSlice({
             state.fetchedData = false
         },
         updateBaskets: (state, action: PayloadAction<Basket>) => {
-            state.baskets?.splice(state.baskets.findIndex(basket => basket._id === action.payload._id), 0, action.payload)
+            state.baskets?.splice(state.baskets.findIndex(basket => basket._id === action.payload._id), 1, action.payload)
             state.fetchedData = true
         },
         removeBasket: (state, action: PayloadAction<String>) => {
             state.baskets?.splice(state.baskets.findIndex(basket => basket._id === action.payload), 1)
             state.fetchedData = true
+        },
+        putTrash: (state, action: PayloadAction<PutRequest>) => {
+            const index = state.baskets?.findIndex(basket => basket._id === action.payload.basketId)
+            if (index !== null && index !== -1) {
+                const basket = state.baskets[index]
+                const newFilling = basket?.filling + action.payload.wasteWeight;
+                if (basket && newFilling <= basket?.dimension) {
+                    const newBasketStatus: Basket = {
+                        ...basket,
+                        filling: newFilling,
+                    }
+                    console.log("🚀 ~ file: baskets.slice.ts:70 ~ newBasketStatus:", newBasketStatus)
+                    state.baskets?.splice(state.baskets.findIndex(basket => basket._id === action.payload.basketId), 1, { ...newBasketStatus })
+                }
+            }
+        },
+        clearTrash: (state, action: PayloadAction<ClearRequest>) => {
+            const index = state.baskets?.findIndex(basket => basket._id === action.payload.basketId)
+            if (index !== null && index !== -1) {
+                const basket = state.baskets[index]
+                const newBasketStatus: Basket = {
+                    ...basket,
+                    filling: 0,
+                }
+                console.log("🚀 ~ file: baskets.slice.ts:70 ~ newBasketStatus:", newBasketStatus)
+                state.baskets?.splice(state.baskets.findIndex(basket => basket._id === action.payload.basketId), 1, { ...newBasketStatus })
+            }
         }
-    },
+    }
 });
 
-export const { setBaskets, clearBaskets, setUnfetched, addBasket, updateBaskets, removeBasket } = basketsSlice.actions;
+export const { setBaskets, clearBaskets, setUnfetched, addBasket, updateBaskets, removeBasket, putTrash, clearTrash } = basketsSlice.actions;
 
 export default basketsSlice.reducer;
 
-export const getBaskets = (userId: string, token: string): ThunkAction<void, RootState, unknown, any> => {
+export const getBaskets = (userId: string): ThunkAction<void, RootState, unknown, AnyAction> => {
     return async dispatch => {
         try {
             const response = await Api.get("/api/baskets", {
@@ -81,7 +109,7 @@ export const getBaskets = (userId: string, token: string): ThunkAction<void, Roo
     }
 }
 
-export const createBasket = (data: any): ThunkAction<void, RootState, unknown, any> => {
+export const createBasket = (data: any): ThunkAction<void, RootState, unknown, AnyAction> => {
     console.log("🚀 ~ file: baskets.slice.ts:76 ~ createBasket ~ data:", data)
     return async dispatch => {
         dispatch(setUnfetched())
@@ -91,7 +119,7 @@ export const createBasket = (data: any): ThunkAction<void, RootState, unknown, a
             })
             console.log("🚀 ~ file: baskets.slice.ts:80 ~ createBasket ~ response:", response)
             if (response.status === 200 && !response.data.error) {
-                dispatch(AddBasket(response.data))
+                dispatch(addBasket(response.data))
             }
         } catch (err) {
             console.log("🚀 ~ file: baskets.slice.ts:94 ~ createBasket ~ err:", err)
@@ -100,7 +128,7 @@ export const createBasket = (data: any): ThunkAction<void, RootState, unknown, a
 }
 
 
-export const updateBasket = (data: Basket): ThunkAction<void, RootState, unknown, any> => {
+export const updateBasket = (data: Basket): ThunkAction<void, RootState, unknown, AnyAction> => {
     console.log("🚀 ~ file: baskets.slice.ts:76 ~ createBasket ~ data:", data)
     return async dispatch => {
         dispatch(setUnfetched())
@@ -125,6 +153,28 @@ export const deleteBasket = (basketId: string): ThunkAction<void, RootState, unk
             if (response.status === 200 && !response.data.error) {
                 dispatch(removeBasket(basketId))
             }
+        } catch (err) {
+            console.error("🚀 ~ file: baskets.slice.ts:129 ~ deleteBasket ~ err:", err)
+        }
+    }
+}
+
+export const onPutTrash = (data: any): ThunkAction<void, RootState, unknown, AnyAction> => {
+    return async dispatch => {
+        try {
+            console.log("🚀 ~ file: baskets.slice.ts:156 ~ putTrash ~ data:", data)
+            dispatch(putTrash(data))
+        } catch (err) {
+            console.error("🚀 ~ file: baskets.slice.ts:129 ~ deleteBasket ~ err:", err)
+        }
+    }
+}
+
+export const onClearTrash = (data: any): ThunkAction<void, RootState, unknown, AnyAction> => {
+    return async dispatch => {
+        try {
+            console.log("🚀 ~ file: baskets.slice.ts:156 ~ putTrash ~ data:", data)
+            dispatch(clearTrash(data))
         } catch (err) {
             console.error("🚀 ~ file: baskets.slice.ts:129 ~ deleteBasket ~ err:", err)
         }
