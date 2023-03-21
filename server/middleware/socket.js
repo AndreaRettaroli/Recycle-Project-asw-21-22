@@ -24,15 +24,18 @@ const CLEAR_TRASH = "clear_trash";
 const onPut = (socket, client) => async (data) => {
   console.log("🚀 ~ file: socket.js:36 ~ onPut ~ data:", data);
   await Utils.putAcquisition(data);
+  socket.emit(PUT_TRASH + ":" + data.userId, data);
 };
 /**
  * This function catch the events for remove trash in a user trash basket
  *  example of  data = {
  *  acquisitionId:"33023aac471e5c26eccd26bd",
+ *  userId:"64023aac471e5c26eccd26bd",
  * }
  */
 const onRemove = (socket, client) => async (data) => {
   await Utils.removeAcquisition(data);
+  socket.emit(REMOVE_TRASH + ":" + data.userId, data);
 };
 /**
  * This function catch the events for claer a user trash basket
@@ -43,6 +46,7 @@ const onRemove = (socket, client) => async (data) => {
  */
 const onClear = (socket, client) => async (data) => {
   await Utils.garbageCollection(data);
+  socket.emit(CLEAR_TRASH + ":" + data.userId, data);
 };
 // This function is responsible for the websocket event registration on all lock commands
 exports.socketHandler = (socket) => {

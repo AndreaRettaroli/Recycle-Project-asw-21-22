@@ -52,12 +52,34 @@ const putAcquisition = async ({
   }
 };
 
-const removeAcquisition = async ({ acquisitionId }) => {
+const removeAcquisition = async ({ userId, acquisitionId }) => {
   try {
     if (
       !Object.is(acquisitionId, undefined) &&
-      !Object.is(acquisitionId, null)
+      !Object.is(acquisitionId, null) &&
+      !Object.is(userId, undefined) &&
+      !Object.is(userId, null)
     ) {
+      const acquisition = await acquisitionModel.findById(acquisitionId);
+      console.log(
+        "🚀 ~ file: functions.js:66 ~ removeAcquisition ~ acquisition:",
+        acquisition
+      );
+      const basket = await basketModel.findById(acquisition.basketId);
+      const newFilling =
+        basket.filling - acquisition.wasteWeight < 0
+          ? 0
+          : basket.filling - acquisition.wasteWeight;
+
+      await basketModel.findByIdAndUpdate(
+        acquisition.basketId,
+        {
+          filling: newFilling,
+        },
+        {
+          new: true,
+        }
+      );
       await acquisitionModel.findByIdAndDelete(acquisitionId);
     }
   } catch (err) {
