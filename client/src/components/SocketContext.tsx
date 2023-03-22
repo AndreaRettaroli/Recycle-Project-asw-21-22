@@ -4,7 +4,7 @@ import io, { Socket } from "socket.io-client";
 import { getBaskets, onClearTrash, onPutTrash } from "../redux/baskets.slice";
 import { AppDispatch, RootState } from "../redux/store";
 
-export const SocketContext = createContext<unknown>();
+export const SocketContext = createContext<unknown>(null);
 const SOCKET_SERVER_URL = "ws://127.0.0.1:3000";
 
 interface Props {

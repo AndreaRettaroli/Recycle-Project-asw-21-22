@@ -22,12 +22,12 @@ interface Basket {
 
 interface BasketsState {
     fetchedData: boolean,
-    baskets: Basket[] | null;
+    baskets: Basket[] ;
 }
 
 const initialState: BasketsState = {
     fetchedData: false,
-    baskets: null,
+    baskets: [],
 };
 
 export const basketsSlice = createSlice({
@@ -39,7 +39,7 @@ export const basketsSlice = createSlice({
             state.fetchedData = true;
         },
         clearBaskets: (state) => {
-            state.baskets = null;
+            state.baskets = [];
             state.fetchedData = false;
         },
         addBasket: (state, action: PayloadAction<Basket>) => {
@@ -53,7 +53,7 @@ export const basketsSlice = createSlice({
             state.baskets?.splice(state.baskets.findIndex(basket => basket._id === action.payload._id), 1, action.payload)
             state.fetchedData = true
         },
-        removeBasket: (state, action: PayloadAction<String>) => {
+        removeBasket: (state, action: PayloadAction<string | undefined>) => {
             state.baskets?.splice(state.baskets.findIndex(basket => basket._id === action.payload), 1)
             state.fetchedData = true
         },
@@ -128,7 +128,7 @@ export const createBasket = (data: any): ThunkAction<void, RootState, unknown, A
 }
 
 
-export const updateBasket = (data: Basket): ThunkAction<void, RootState, unknown, AnyAction> => {
+export const updateBasket = (data: any): ThunkAction<void, RootState, unknown, AnyAction> => {
     console.log("🚀 ~ file: baskets.slice.ts:76 ~ createBasket ~ data:", data)
     return async dispatch => {
         dispatch(setUnfetched())
@@ -144,14 +144,16 @@ export const updateBasket = (data: Basket): ThunkAction<void, RootState, unknown
     }
 }
 
-export const deleteBasket = (basketId: string): ThunkAction<void, RootState, unknown, AnyAction> => {
+export const deleteBasket = (basketId: string | undefined): ThunkAction<void, RootState, unknown, AnyAction> => {
     return async dispatch => {
         dispatch(setUnfetched())
         try {
             const response = await Api.delete("/api/basket", { params: { id: basketId } })
             console.log("🚀 ~ file: baskets.slice.ts:109 ~ deleteBasket ~ response:", response)
             if (response.status === 200 && !response.data.error) {
-                dispatch(removeBasket(basketId))
+                if (!Object.is(basketId, undefined)) {
+                    dispatch(removeBasket(basketId))
+                }
             }
         } catch (err) {
             console.error("🚀 ~ file: baskets.slice.ts:129 ~ deleteBasket ~ err:", err)

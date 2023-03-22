@@ -4,6 +4,7 @@ import { ThunkAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { User } from '../types/User';
 import Api from '../api/Api';
+import { SignUpFormInput } from '../pages/Profile';
 
 
 
@@ -66,7 +67,7 @@ export const getLoggedUser = (userId: string): ThunkAction<void, RootState, unkn
     }
 };
 
-export const updateUser = (data: User): ThunkAction<void, RootState, unknown, AnyAction> => {
+export const updateUser = (data: SignUpFormInput): ThunkAction<void, RootState, unknown, AnyAction> => {
     return async dispatch => {
         try {
             const response = await Api.put("/api/user",

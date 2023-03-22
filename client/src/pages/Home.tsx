@@ -44,7 +44,7 @@ const Home: FC = () => {
         <div className="w-4/5 flex-container">
           <Card>
             <div className="home-grid-container">
-              {baskets?.map((basket, index) => (
+              {baskets?.map((basket: any, index) => (
                 <Basket
                   key={"basket-" + index}
                   basket={basket}

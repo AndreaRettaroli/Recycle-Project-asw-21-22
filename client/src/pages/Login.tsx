@@ -32,8 +32,10 @@ const Login: FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<Credentials>({
-    email: "",
-    password: "",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
   const onSubmit = (data: Credentials) => {

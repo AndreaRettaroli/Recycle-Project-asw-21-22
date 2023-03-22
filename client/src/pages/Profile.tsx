@@ -10,7 +10,7 @@ import Card from "../components/UI/Card";
 import FormInput from "../components/UI/FormInput";
 import Loading from "../components/UI/Loading";
 
-interface SignUpFormInput {
+export interface SignUpFormInput {
   name: string;
   surname: string;
   email: string;
@@ -44,14 +44,16 @@ const Profile: FC = () => {
     formState: { errors },
     watch,
   } = useForm<SignUpFormInput>({
-    name: user?.name,
-    surname: user?.surname,
-    email: user?.email,
-    password: "",
-    repeatPassword: "",
-    address: user?.address,
-    province: user?.province,
-    language: user?.language,
+    defaultValues: {
+      name: user?.name,
+      surname: user?.surname,
+      email: user?.email,
+      password: "",
+      repeatPassword: "",
+      address: user?.address,
+      province: user?.province,
+      language: user?.language,
+    },
   });
 
   const onSubmit = (data: SignUpFormInput) => {

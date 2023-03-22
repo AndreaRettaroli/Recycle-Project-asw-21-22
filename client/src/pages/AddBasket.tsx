@@ -25,11 +25,13 @@ const AddBasket: FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<AddBasketFormInput>({
-    type: BasketTypes.MIXED,
-    dimension: BasketDimensions.MEDIUM,
+    defaultValues: {
+      type: BasketTypes.MIXED,
+      dimension: BasketDimensions.MEDIUM,
+    },
   });
 
-  const onSubmit = (data: AddBasketFormInput) => {
+  const onSubmit = (data: Partial<AddBasketFormInput>) => {
     dispatch(createBasket({ ...data, userId: user?._id }));
     navigate("/home");
   };

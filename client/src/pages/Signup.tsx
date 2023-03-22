@@ -34,14 +34,16 @@ export const Signup: FC = () => {
     formState: { errors },
     watch,
   } = useForm<SignUpFormInput>({
-    name: "",
-    surname: "",
-    email: "",
-    password: "",
-    repeatPassword: "",
-    address: "",
-    province: "",
-    language: "",
+    defaultValues: {
+      name: "",
+      surname: "",
+      email: "",
+      password: "",
+      repeatPassword: "",
+      address: "",
+      province: "",
+      language: "",
+    },
   });
   const onSubmit = (data: SignUpFormInput) => {
     signup(data);

@@ -46,10 +46,12 @@ const BasketDetails: FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<UpdateBasketFormInput>({
-    dimension: BasketDimensions.MEDIUM,
+    defaultValues: {
+      dimension: BasketDimensions.MEDIUM,
+    },
   });
 
-  const onSubmit = (data: UpdateBasketFormInput) => {
+  const onSubmit = (data: Partial<UpdateBasketFormInput>) => {
     console.log("🚀 ~ file: BasketDetails.tsx:55 ~ onSubmit ~ ...basket:", {
       ...basket,
     });
