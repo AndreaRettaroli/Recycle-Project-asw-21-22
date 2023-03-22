@@ -33,3 +33,5 @@ npm-debug.log
 .DS_Store
 # Remove env file
 .env
+# remove docker data
+data/*
