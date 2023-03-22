@@ -9,6 +9,7 @@ import FormInput from "../components/UI/FormInput";
 import useUserSession from "../hooks/useUserSession";
 import { AppDispatch } from "../redux/store";
 import { setAuthUser } from "../redux/user.slice";
+import { Languages } from "../types/Languages";
 import logo from "/recycleLogo.jpg";
 
 interface SignUpFormInput {
@@ -19,7 +20,7 @@ interface SignUpFormInput {
   repeatPassword: string;
   address: string;
   province: string;
-  language: string;
+  language: Languages;
 }
 
 export const Signup: FC = () => {
@@ -42,7 +43,7 @@ export const Signup: FC = () => {
       repeatPassword: "",
       address: "",
       province: "",
-      language: "",
+      language: Languages.ITALIAN,
     },
   });
   const onSubmit = (data: SignUpFormInput) => {
@@ -158,17 +159,25 @@ export const Signup: FC = () => {
             placeholder={"Province"}
             error={errors.province}
           /> */}
-            <FormInput
-              propsName={"language"}
-              label={"Language"}
-              register={{
-                ...register("language", {
+            <div className="mb-4">
+              <label
+                htmlFor={"language"}
+                className="block text-gray-700 font-bold mb-2"
+              >
+                Language
+              </label>
+              <select
+                id="language"
+                className="shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                {...register("language", {
                   required: "This field is required.",
-                }),
-              }}
-              placeholder={"Language"}
-              error={errors.language}
-            />
+                })}
+                defaultValue={"language"}
+              >
+                <option value={Languages.ITALIAN}>Italian</option>
+                <option value={Languages.ENGLISH}>English</option>
+              </select>
+            </div>
           </div>
           <Button type="submit">Sign Up</Button>
         </form>

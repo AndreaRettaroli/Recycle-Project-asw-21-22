@@ -9,6 +9,7 @@ import Button from "../components/UI/Button";
 import Card from "../components/UI/Card";
 import FormInput from "../components/UI/FormInput";
 import Loading from "../components/UI/Loading";
+import { Languages } from "../types/Languages";
 
 export interface SignUpFormInput {
   name: string;
@@ -18,7 +19,7 @@ export interface SignUpFormInput {
   repeatPassword: string;
   address: string;
   province: string;
-  language: string;
+  language: Languages;
 }
 
 const Profile: FC = () => {
@@ -177,18 +178,25 @@ const Profile: FC = () => {
                   error={errors.province}
                   defaultValue={user?.province}
                 />
-                <FormInput
-                  propsName={"language"}
-                  label={"Language"}
-                  register={{
-                    ...register("language", {
+                <div className="mb-4">
+                  <label
+                    htmlFor={"language"}
+                    className="block text-gray-700 font-bold mb-2"
+                  >
+                    Language
+                  </label>
+                  <select
+                    id="language"
+                    className="shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    {...register("language", {
                       required: "This field is required.",
-                    }),
-                  }}
-                  placeholder={"Language"}
-                  error={errors.language}
-                  defaultValue={user?.language}
-                />
+                    })}
+                    defaultValue={user?.language}
+                  >
+                    <option value={Languages.ITALIAN}>Italian</option>
+                    <option value={Languages.ENGLISH}>English</option>
+                  </select>
+                </div>
               </div>
               <Button type="submit">Update</Button>
             </form>

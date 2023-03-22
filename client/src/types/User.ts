@@ -1,3 +1,5 @@
+import { Languages } from "./Languages";
+
 export interface User {
     _id: string,
     _v: number,
@@ -7,7 +9,7 @@ export interface User {
     password: string;
     address: string;
     province: string;
-    language: string;
+    language: Languages;
     role: string;
     token: string;
     createdAt: Date;
