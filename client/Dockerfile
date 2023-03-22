@@ -1,17 +1,19 @@
 # Use base image
-FROM node:lts-alpine as base
+FROM node:lts-alpine
 
 # Set the working directory to /app
-WORKDIR /app
+ENV WORKINGDIR=/root/app
+# set working dir
+WORKDIR ${WORKINGDIR}
+COPY ./ ${WORKINGDIR}/
 
-# Copy the package.json and package-lock.json files
-COPY client/package*.json ./
+# install package.json dependencies
+RUN npm install
+
 
 # Install the dependencies
 RUN npm install
 
-# Copy the rest of the application code
-COPY client/ .
 
 # Build the application
 RUN npm run build
@@ -20,4 +22,4 @@ RUN npm run build
 EXPOSE 5173
 
 # Start the application on port 5173
-CMD ["npm", "run", "start", "--", "--port", "5173"]
+CMD npm run start-in-container
