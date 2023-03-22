@@ -38,7 +38,7 @@ const BasketAcquisitionsList: FC<Props> = ({ basketId }) => {
         d.getSeconds() < 10 ? "0" + "" + d.getSeconds() : d.getSeconds(),
       ].join(":") +
       " " +
-      [d.getMonth() + 1, d.getDate(), d.getFullYear()].join("/");
+      [d.getDate(), d.getMonth() + 1, d.getFullYear()].join("-");
     return dformat;
   };
 
@@ -53,15 +53,18 @@ const BasketAcquisitionsList: FC<Props> = ({ basketId }) => {
           <h2 className="text-2xl font-bold">Last acquisitions</h2>
           <ul>
             {/* add .slice(-x) to take last x element, need to check order*/}
-            {acquisitionsList.map((item, index) => (
-              <li key={"acquisition-" + index}>
-                {item.wasteName +
-                  " " +
-                  item.wasteWeight +
-                  "Kg " +
-                  dateParser(item.createdAt)}
-              </li>
-            ))}
+            {acquisitionsList
+              .reverse()
+              .slice(0, 10)
+              .map((item, index) => (
+                <li key={"acquisition-" + index} className="list-disc ml-4">
+                  {item.wasteName +
+                    " " +
+                    item.wasteWeight +
+                    "Kg " +
+                    dateParser(item.createdAt)}
+                </li>
+              ))}
           </ul>
         </div>
       )}
