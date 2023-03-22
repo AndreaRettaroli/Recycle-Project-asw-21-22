@@ -1,5 +1,5 @@
 
-# Run 
+### Run 
 ````
     node index.js
 ````
@@ -7,19 +7,18 @@ or
 ````
     nodemon index.js
 ````
-# Swagger
+### Swagger
 
 For swagger i used the following packages:
 - [swagger-ui-express](https://github.com/scottie1984/swagger-ui-express)
 - [swagger-jsdoc](https://github.com/Surnet/swagger-jsdoc)
-- 
+
 Swagger is available at http://localhost:3000/
 
-for more info follow [this guide](https://blog.logrocket.com/documenting-express-js-api-swagger/).
-♠
+For more info follow [this guide](https://blog.logrocket.com/documenting-express-js-api-swagger/).
 For authentication use jwt token returned after login or signin without specify Bearer before.
 
-# JWT
+### JWT
 To create a token key use the following code:
 ````
 const crypto= require('crypto')
@@ -30,7 +29,7 @@ for more info follow [this guide](https://www.digitalocean.com/community/tutoria
 
 The docs [jwt.io](https://jwt.io/)
 
-# Tests
+### Tests
 
 I used [Mocha](https://mochajs.org/) with [Chai](https://www.chaijs.com/) and [SuperTest](https://github.com/ladjs/supertest#readme).
 
@@ -38,3 +37,16 @@ To run test use:
 ````
     npm run test
 ````
+
+### Docker
+
+Create an image:
+````
+docker build -t recycle-server .
+````
+create a container:
+````
+docker run -p 3000:3000 recycle-server
+````
+
+mongo db image is built by docker-compose.yaml .
