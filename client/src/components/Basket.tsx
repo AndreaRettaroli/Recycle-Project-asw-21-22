@@ -10,12 +10,16 @@ interface Props {
 
 const Basket: FC<Props> = (props) => {
   const getHeight = (filling: number, dimension: number) => {
-    return ((100 * filling) / dimension).toFixed(0);
+    if (!Object.is(filling, undefined) && !Object.is(dimension, undefined)) {
+      return ((100 * filling) / dimension).toFixed(0);
+    } else {
+      return 0;
+    }
   };
 
   const waveHeight = `${getHeight(
-    props.basket?.filling || 1,
-    props.basket?.dimension || 1
+    props.basket?.filling,
+    props.basket?.dimension
   )}px`;
 
   return (
