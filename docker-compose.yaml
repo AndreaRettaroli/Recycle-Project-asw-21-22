@@ -1,0 +1,46 @@
+version: '3.1'
+
+services:
+  # cf. https://hub.docker.com/_/mongo
+  mongodb:
+    image: mongo
+    restart: always
+    volumes:
+      - ./data/db:/data/db
+      - ./data/configdb:/data/configdb
+    environment:
+      MONGO_INITDB_DATABASE: recycle-database
+    ports:
+      - "27017:27017" # mongo default port
+      #MONGO_INITDB_ROOT_USERNAME: root
+      #MONGO_INITDB_ROOT_PASSWORD: example
+  # cf. https://hub.docker.com/_/mongo-express
+  mongo-dashboard:
+    depends_on:
+      - mongodb
+    image: mongo-express
+    restart: always
+    ports:
+      - "8081:8081" # mongo bashboard port
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb #name fo image match with IP for docker DNS
+      ME_CONFIG_MONGODB_PORT: 27017  #mongodb port
+      ME_CONFIG_MONGODB_URL: mongodb://${ME_CONFIG_MONGODB_SERVER}:${ME_CONFIG_MONGODB_PORT}/
+
+  recycle-server:
+    depends_on:
+      - mongodb
+    image: recycle-server
+    environment:
+      MONGO_HOST: mongodb #name fo image match with IP for docker DNS
+    ports:
+      - "3000:3000"
+    restart: always
+
+  recycle-client:
+    depends_on:
+      - recycle-server
+    image: recycle
+    ports:
+      - "5173:5173"
+    restart: always
