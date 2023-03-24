@@ -21,7 +21,7 @@ const Login: FC = () => {
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(getLoggedUser(loggedUser.userId));
-      navigate("/home");
+      navigate("/");
     }
   }, [isLoggedIn]);
 
@@ -49,7 +49,7 @@ const Login: FC = () => {
       if (response.status === 200) {
         dispatch(setAuthUser(response.data));
         login(response.data.token, response.data._id);
-        navigate("/home");
+        navigate("/");
       }
     } catch (err) {
       console.error("🚀 ~ file: Login.tsx:64 ~ userLogin ~ err:", err);

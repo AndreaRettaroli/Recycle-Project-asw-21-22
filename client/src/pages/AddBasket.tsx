@@ -33,7 +33,7 @@ const AddBasket: FC = () => {
 
   const onSubmit = (data: Partial<AddBasketFormInput>) => {
     dispatch(createBasket({ ...data, userId: user?._id }));
-    navigate("/home");
+    navigate("/");
   };
 
   return (

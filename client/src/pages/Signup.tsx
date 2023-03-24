@@ -56,7 +56,7 @@ export const Signup: FC = () => {
       if (response.status === 200) {
         dispatch(setAuthUser(response.data));
         login(response.data.token, response.data._id);
-        navigate("/home");
+        navigate("/");
       }
     } catch (err) {}
   };

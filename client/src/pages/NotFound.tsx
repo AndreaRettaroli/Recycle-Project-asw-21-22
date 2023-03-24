@@ -17,7 +17,7 @@ const NotFound: FC = () => {
               <Link to="/login">Login</Link>
             </Button>
             <Button>
-              <Link to="/home">Home</Link>
+              <Link to="/">Home</Link>
             </Button>
           </div>
         </div>

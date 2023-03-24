@@ -25,7 +25,7 @@ const Navbar: FC<Props> = ({ title }) => {
         <ul className="inline-flex gap-8 items-center sm:mr-16">
           <li>
             <NavLink
-              to="/home"
+              to="/"
               style={({ isActive }) => ({
                 fontWeight: isActive ? "Bolder" : "none",
                 textDecoration: isActive ? "underline" : "none",

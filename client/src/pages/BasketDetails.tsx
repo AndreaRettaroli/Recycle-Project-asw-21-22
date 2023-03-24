@@ -56,12 +56,12 @@ const BasketDetails: FC = () => {
       ...basket,
     });
     dispatch(updateBasket({ ...basket, ...data }));
-    //navigate("/home");
+    navigate("/");
   };
 
   const onDelete = () => {
     dispatch(deleteBasket(basket?._id));
-    navigate("/home");
+    navigate("/");
   };
 
   return (
