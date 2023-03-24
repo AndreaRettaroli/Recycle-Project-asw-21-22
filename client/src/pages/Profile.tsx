@@ -15,8 +15,6 @@ export interface SignUpFormInput {
   name: string;
   surname: string;
   email: string;
-  password: string;
-  repeatPassword: string;
   address: string;
   province: string;
   language: Languages;
@@ -43,14 +41,12 @@ const Profile: FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
+    //watch,
   } = useForm<SignUpFormInput>({
     defaultValues: {
       name: user?.name,
       surname: user?.surname,
       email: user?.email,
-      password: "",
-      repeatPassword: "",
       address: user?.address,
       province: user?.province,
       language: user?.language,
@@ -118,7 +114,7 @@ const Profile: FC = () => {
                   error={errors.email}
                   defaultValue={user?.email}
                 />
-                <FormInput
+                {/* <FormInput
                   type="password"
                   propsName={"password"}
                   label={"Password"}
@@ -153,7 +149,7 @@ const Profile: FC = () => {
                   }}
                   placeholder={"Repeat Password"}
                   error={errors.repeatPassword}
-                />
+                /> */}
                 <FormInput
                   propsName={"address"}
                   label={"Address"}
