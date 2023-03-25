@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import { useTranslation } from "react-i18next";
 import {
   LineChart as Chart,
   Line,
@@ -20,7 +21,7 @@ interface Props {
 }
 
 const LineChart: React.FC<Props> = ({ data }) => {
-  console.log("🚀 ~ file: LineChart.tsx:68 ~ data:", data);
+  const { t } = useTranslation("translation");
   return (
     <ResponsiveContainer width="100%" height="100%">
       <Chart
@@ -31,7 +32,7 @@ const LineChart: React.FC<Props> = ({ data }) => {
           top: 10,
           right: 30,
           left: 0,
-          bottom: 0,
+          bottom: 10,
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
@@ -40,14 +41,14 @@ const LineChart: React.FC<Props> = ({ data }) => {
         <Tooltip />
         <Legend />
         <Line
-          name="Waste Weight"
+          name={t<string>("Waste Weight")}
           type="monotone"
           dataKey="wasteWeight"
           stroke="#8884d8"
           activeDot={{ r: 8 }}
         />
         <Line
-          name="Waste Value"
+          name={t<string>("Waste Value")}
           type="monotone"
           dataKey="wasteValue"
           stroke="#82ca9d"

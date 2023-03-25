@@ -4,12 +4,14 @@ import logo from "/recycleLogo.jpg";
 import home from "../../assets/home.svg";
 import statistics from "../../assets/statistics.svg";
 import profile from "../../assets/profile.svg";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   title: string;
 }
 
 const Navbar: FC<Props> = ({ title }) => {
+  const { t } = useTranslation("translation");
   return (
     <>
       <div className="w-full flex justify-center items-center sm:hidden">
@@ -39,7 +41,7 @@ const Navbar: FC<Props> = ({ title }) => {
                 className="sm:hidden m-auto "
                 alt="home-icon"
               />
-              Home
+              {t("Home")}
             </NavLink>
           </li>
           <li>
@@ -57,7 +59,7 @@ const Navbar: FC<Props> = ({ title }) => {
                 className="sm:hidden m-auto"
                 alt="statistics-icon"
               />
-              Statistics
+              {t("Statistics")}
             </NavLink>
           </li>
           <li>
@@ -75,7 +77,7 @@ const Navbar: FC<Props> = ({ title }) => {
                 className="sm:hidden m-auto"
                 alt="statistics-icon"
               />
-              Profile
+              {t("Profile")}
             </NavLink>
           </li>
         </ul>

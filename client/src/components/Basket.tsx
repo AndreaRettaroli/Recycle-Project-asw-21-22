@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Basket as BasketModel } from "../types/Basket";
 import Card from "./UI/Card";
@@ -9,6 +10,7 @@ interface Props {
 }
 
 const Basket: FC<Props> = (props) => {
+  const { t } = useTranslation("translation");
   const getHeight = (filling: number, dimension: number) => {
     if (!Object.is(filling, undefined) && !Object.is(dimension, undefined)) {
       return ((100 * filling) / dimension).toFixed(0);
@@ -28,7 +30,7 @@ const Basket: FC<Props> = (props) => {
         <div className=" flex w-48 h-48 flex-col justify-between items-center">
           <div>
             <h3 className="text-1xl font-bold mb-2 text-center">
-              {props.basket?.type}
+              {t(props.basket?.type)}
             </h3>
             <p className="text-center">
               {props.basket?.filling + "/" + props.basket?.dimension + " Kg"}

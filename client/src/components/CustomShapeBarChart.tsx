@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import {
   BarChart,
   Bar,
@@ -29,6 +30,7 @@ const TriangleBar = (props: any) => {
 
 interface Data {
   name: string;
+  label: string;
   acquisitionsNumber: number;
 }
 interface Props {
@@ -36,6 +38,7 @@ interface Props {
 }
 
 const CustomShapeBarChart: React.FC<Props> = ({ data }) => {
+  const { t } = useTranslation("translation");
   return (
     <ResponsiveContainer width="100%" height="100%">
       <BarChart
@@ -46,14 +49,14 @@ const CustomShapeBarChart: React.FC<Props> = ({ data }) => {
           top: 20,
           right: 0,
           left: 0,
-          bottom: 0,
+          bottom: 10,
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
+        <XAxis dataKey="label" />
         <YAxis />
         <Bar
-          name="Number of Acquisitions"
+          name={t<string>("Number of Acquisitions")}
           dataKey="acquisitionsNumber"
           fill="#8884d8"
           shape={<TriangleBar />}

@@ -2,12 +2,14 @@ import React, { FC, useEffect, useState } from "react";
 import Api from "../api/Api";
 import Loading from "./UI/Loading";
 import { Acquisition } from "../types/Acquisition";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   basketId?: string;
 }
 
 const BasketAcquisitionsList: FC<Props> = ({ basketId }) => {
+  const { t } = useTranslation("translation");
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [acquisitionsList, setAcquisitionsList] = useState<Acquisition[]>([]);
 
@@ -50,7 +52,7 @@ const BasketAcquisitionsList: FC<Props> = ({ basketId }) => {
         </div>
       ) : (
         <div className="w-full ">
-          <h2 className="text-2xl font-bold">Last acquisitions</h2>
+          <h2 className="text-2xl font-bold">{t("Last acquisitions")}</h2>
           <ul>
             {/* add .slice(-x) to take last x element, need to check order*/}
             {acquisitionsList

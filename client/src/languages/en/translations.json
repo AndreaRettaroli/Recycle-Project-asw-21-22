@@ -43,5 +43,11 @@
   "Metals": "Metals",
   "Plastic": "Plastic",
   "Paper": "Paper",
-  "Create": "Create"
+  "Create": "Create",
+  "Last acquisitions": "Last acquisitions",
+  "Income": "Income",
+  "Acquisitions": "Acquisitions",
+  "Waste Weight": "Waste Weight",
+  "Waste Value": "Waste Value",
+  "Number of Acquisitions":"Number of Acquisitions"
 }

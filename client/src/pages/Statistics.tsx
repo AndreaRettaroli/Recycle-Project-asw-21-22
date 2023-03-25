@@ -14,16 +14,18 @@ import { useTranslation } from "react-i18next";
 
 interface BarData {
   name: BasketTypes;
+  label: string;
   acquisitionsNumber: number;
 }
 interface LineData {
-  name: BasketTypes;
+  name: BasketTypes | string;
   wasteValue: number;
   wasteWeight: number;
 }
 
 interface DoughnutData {
   name: BasketTypes;
+  label: string;
   value: number;
 }
 
@@ -51,6 +53,7 @@ const Statistics: FC = () => {
       .map((name) => {
         return {
           name: name,
+          label: t(name),
           acquisitionsNumber: data.filter((item) => item?.wasteType === name)
             .length,
         };
@@ -72,7 +75,7 @@ const Statistics: FC = () => {
       .map((item) => item.name)
       .map((name) => {
         return {
-          name: name,
+          name: t(name),
           wasteValue: data
             .filter((item) => item?.basketType === name)
             .map((item) => item?.wasteValue)
@@ -102,6 +105,7 @@ const Statistics: FC = () => {
       .map((name) => {
         return {
           name: name,
+          label: t(name),
           value: data
             .filter((item) => item?.basketType === name)
             .map((item) => item?.wasteValue)
@@ -174,16 +178,25 @@ const Statistics: FC = () => {
             </Card>
             <Card>
               <div className="chart-container">
+                <h3 className="text-1xl font-bold text-center">
+                  {t("Recycled")}
+                </h3>
                 <LineChart data={lineData} />
               </div>
             </Card>
             <Card>
               <div className="chart-container">
+                <h3 className="text-1xl font-bold text-center">
+                  {t("Acquisitions")}
+                </h3>
                 <CustomShapeBarChart data={barData} />
               </div>
             </Card>
             <Card>
               <div className="chart-container">
+                <h3 className="text-1xl font-bold text-center">
+                  {t("Income")}
+                </h3>
                 <DoughnutChart data={doughnutData} />
               </div>
             </Card>
