@@ -11,8 +11,10 @@ import Button from "../components/UI/Button";
 import Card from "../components/UI/Card";
 import FormInput from "../components/UI/FormInput";
 import logo from "/recycleLogo.jpg";
+import { useTranslation } from "react-i18next";
 
 const Login: FC = () => {
+  const { t } = useTranslation("translation");
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -60,14 +62,16 @@ const Login: FC = () => {
     <div className="flex-container">
       <Card>
         <img src={logo} width="80px" alt="recycle-logo" />
-        <h1 className="text-3xl font-bold mb-6 text-center">Login</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center">{t("Login")}</h1>
         <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
           <FormInput
             propsName={"email"}
             label={"Email"}
             type="email"
             register={{
-              ...register("email", { required: "This field is required" }),
+              ...register("email", {
+                required: t<string>("This field is required"),
+              }),
             }}
             placeholder={"Enter your email"}
             error={errors?.email}
@@ -77,15 +81,17 @@ const Login: FC = () => {
             label={"Password"}
             type="password"
             register={{
-              ...register("password", { required: "This field is required" }),
+              ...register("password", {
+                required: t<string>("This field is required"),
+              }),
             }}
             placeholder={"Enter your password"}
             error={errors?.password}
           />
-          <Button type={"submit"}>Login</Button>
+          <Button type={"submit"}>{t("Login")}</Button>
         </form>
         <Link className="m-auto underline" to={"/signup"}>
-          Sign Up
+          {t("Sign Up")}
         </Link>
       </Card>
     </div>

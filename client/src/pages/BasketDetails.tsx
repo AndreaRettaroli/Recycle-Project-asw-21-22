@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Basket from "../components/Basket";
@@ -12,13 +13,14 @@ import { colors } from "../constants/colors";
 import useUserSession from "../hooks/useUserSession";
 import { deleteBasket, getBaskets, updateBasket } from "../redux/baskets.slice";
 import { AppDispatch, RootState } from "../redux/store";
-import { Basket as BasketModel, BasketDimensions } from "../types/Basket";
+import { BasketDimensions } from "../types/Basket";
 
 interface UpdateBasketFormInput {
   dimension: BasketDimensions;
 }
 
 const BasketDetails: FC = () => {
+  const { t } = useTranslation("translation");
   const { basketId } = useParams();
   const { isLoggedIn, loggedUser } = useUserSession();
 
@@ -66,7 +68,7 @@ const BasketDetails: FC = () => {
 
   return (
     <>
-      <Navbar title={"Basket Details"} />
+      <Navbar title={t("Basket Details")} />
       {!fetchedData ? (
         <Loading />
       ) : (
@@ -93,7 +95,7 @@ const BasketDetails: FC = () => {
                       htmlFor={"dimension"}
                       className="block text-gray-700 font-bold mb-2"
                     >
-                      Dimension
+                      {t("Dimension")}
                     </label>
                     <select
                       id="dimension"
@@ -101,12 +103,18 @@ const BasketDetails: FC = () => {
                       {...register("dimension")}
                       defaultValue={BasketDimensions.MEDIUM}
                     >
-                      <option value={BasketDimensions.SMALL}>Small</option>
-                      <option value={BasketDimensions.MEDIUM}>Medium</option>
-                      <option value={BasketDimensions.LARGE}>Large</option>
+                      <option value={BasketDimensions.SMALL}>
+                        {t("Small")}
+                      </option>
+                      <option value={BasketDimensions.MEDIUM}>
+                        {t("Medium")}
+                      </option>
+                      <option value={BasketDimensions.LARGE}>
+                        {t("Large")}
+                      </option>
                     </select>
                   </div>
-                  <Button type={"submit"}>Update</Button>
+                  <Button type={"submit"}>{t("Update")}</Button>
                 </form>
               </div>
             </div>
@@ -117,7 +125,7 @@ const BasketDetails: FC = () => {
           <Card>
             <div className="w-full  py-3 ">
               <Button type="button" onClick={onDelete}>
-                Delete
+                {t("Delete")}
               </Button>
             </div>
           </Card>

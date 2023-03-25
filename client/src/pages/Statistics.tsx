@@ -1,17 +1,16 @@
 import React, { FC, useEffect, useState } from "react";
 import LineChart from "../components/LineChart";
 import DoughnutChart from "../components/CustomActiveShapePieChart";
-import AreaChart from "../components/StackedAreaChart";
 import Card from "../components/UI/Card";
 import Navbar from "../components/UI/Navbar";
 import { Acquisition } from "../types/Acquisition";
 import { Withdrawal } from "../types/Withdrawal";
 import useUserSession from "../hooks/useUserSession";
-import { useDispatch } from "react-redux";
 import Loading from "../components/UI/Loading";
 import Api from "../api/Api";
 import { BasketTypes } from "../types/Basket";
 import CustomShapeBarChart from "../components/CustomShapeBarChart";
+import { useTranslation } from "react-i18next";
 
 interface BarData {
   name: BasketTypes;
@@ -29,6 +28,7 @@ interface DoughnutData {
 }
 
 const Statistics: FC = () => {
+  const { t } = useTranslation("translation");
   const { isLoggedIn, loggedUser } = useUserSession();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [acquisitionsList, setAcquisitionsList] = useState<Acquisition[]>([]);
@@ -142,7 +142,7 @@ const Statistics: FC = () => {
 
   return (
     <>
-      <Navbar title="Statistics" />
+      <Navbar title={t("Statistics")} />
       {isLoading ? (
         <Loading />
       ) : (
@@ -151,7 +151,7 @@ const Statistics: FC = () => {
             <Card>
               <div className="chart-container flex items-center">
                 <div className="w-3/6 text-center">
-                  <h2 className="text-2xl font-bold">Earned</h2>
+                  <h2 className="text-2xl font-bold">{t("Earned")}</h2>
                   <b className="text-3xl text-green">
                     {withdrawalsList
                       .map((item) => item?.wasteValue)
@@ -161,7 +161,7 @@ const Statistics: FC = () => {
                   </b>
                 </div>
                 <div className="w-3/6 text-center ">
-                  <h2 className="text-2xl font-bold">Recycled</h2>
+                  <h2 className="text-2xl font-bold">{t("Recycled")}</h2>
                   <b className="text-3xl text-green">
                     {withdrawalsList
                       .map((item) => item?.wasteWeight)

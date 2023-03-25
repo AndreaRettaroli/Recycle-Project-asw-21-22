@@ -1,15 +1,14 @@
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import { AppDispatch, RootState } from "../redux/store";
-import Loading from "../components/UI/Loading";
 import { useSelector, useDispatch } from "react-redux";
 import Navbar from "../components/UI/Navbar";
 import Button from "../components/UI/Button";
 import Card from "../components/UI/Card";
-import FormInput from "../components/UI/FormInput";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { createBasket } from "../redux/baskets.slice";
 import { BasketDimensions, BasketTypes } from "../types/Basket";
+import { useTranslation } from "react-i18next";
 
 interface AddBasketFormInput {
   type: BasketTypes;
@@ -17,6 +16,7 @@ interface AddBasketFormInput {
 }
 
 const AddBasket: FC = () => {
+  const { t } = useTranslation("translation");
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user.user);
@@ -38,7 +38,7 @@ const AddBasket: FC = () => {
 
   return (
     <>
-      <Navbar title="Add Basket" />
+      <Navbar title={t("Add Basket")} />
       <div className="flex-container">
         <Card>
           <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
@@ -47,19 +47,19 @@ const AddBasket: FC = () => {
                 htmlFor={"type"}
                 className="block text-gray-700 font-bold mb-2"
               >
-                Type of basket
+                {t("Type of basket")}
               </label>
               <select
                 className="shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 {...register("type")}
                 defaultValue={BasketTypes.MIXED}
               >
-                <option value={BasketTypes.MIXED}>Mixed</option>
-                <option value={BasketTypes.ORGANIC}>Organic</option>
-                <option value={BasketTypes.PLASTIC}>Plastic</option>
-                <option value={BasketTypes.GLASS}>Glass</option>
-                <option value={BasketTypes.METALS}>Metals</option>
-                <option value={BasketTypes.PAPER}>Paper</option>
+                <option value={BasketTypes.MIXED}>{t("Mixed")}</option>
+                <option value={BasketTypes.ORGANIC}>{t("Organic")}</option>
+                <option value={BasketTypes.PLASTIC}>{t("Plastic")}</option>
+                <option value={BasketTypes.GLASS}>{t("Glass")}</option>
+                <option value={BasketTypes.METALS}>{t("Metals")}</option>
+                <option value={BasketTypes.PAPER}>{t("Paper")}</option>
               </select>
             </div>
             <div className="mb-4">
@@ -67,7 +67,7 @@ const AddBasket: FC = () => {
                 htmlFor={"dimension"}
                 className="block text-gray-700 font-bold mb-2"
               >
-                Dimension
+                {t("Dimension")}
               </label>
               <select
                 id="dimension"
@@ -75,12 +75,12 @@ const AddBasket: FC = () => {
                 {...register("dimension")}
                 defaultValue={BasketDimensions.MEDIUM}
               >
-                <option value={BasketDimensions.SMALL}>Small</option>
-                <option value={BasketDimensions.MEDIUM}>Medium</option>
-                <option value={BasketDimensions.LARGE}>Large</option>
+                <option value={BasketDimensions.SMALL}>{t("Small")}</option>
+                <option value={BasketDimensions.MEDIUM}>{t("Medium")}</option>
+                <option value={BasketDimensions.LARGE}>{t("Large")}</option>
               </select>
             </div>
-            <Button type={"submit"}>Create</Button>
+            <Button type={"submit"}>{t("Create")}</Button>
           </form>
         </Card>
       </div>

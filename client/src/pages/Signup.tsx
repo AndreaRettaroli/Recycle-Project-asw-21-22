@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { Form, useNavigate } from "react-router-dom";
 import Api from "../api/Api";
@@ -24,6 +25,7 @@ interface SignUpFormInput {
 }
 
 export const Signup: FC = () => {
+  const { t } = useTranslation("translation");
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -68,25 +70,29 @@ export const Signup: FC = () => {
     <div className="flex-container">
       <Card>
         <img src={logo} width="80px" alt="recycle-logo" />
-        <h1 className="text-3xl font-bold mb-6 text-center">Sign Up</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center">{t("Sign Up")}</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid-container">
             <FormInput
               propsName={"name"}
-              label={"Name"}
+              label={t("Name")}
               register={{
-                ...register("name", { required: "This field is required." }),
+                ...register("name", {
+                  required: t<string>("This field is required."),
+                }),
               }}
-              placeholder={"Name"}
+              placeholder={t("Name")}
               error={errors.name}
             />
             <FormInput
               propsName={"surname"}
-              label={"Surname"}
+              label={t("Surname")}
               register={{
-                ...register("surname", { required: "This field is required." }),
+                ...register("surname", {
+                  required: t<string>("This field is required."),
+                }),
               }}
-              placeholder={"Surname"}
+              placeholder={t("Surname")}
               error={errors.surname}
             />
             <FormInput
@@ -95,10 +101,10 @@ export const Signup: FC = () => {
               label={"Email"}
               register={{
                 ...register("email", {
-                  required: "This field is required.",
+                  required: t<string>("This field is required."),
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Invalid Email",
+                    message: t("Invalid Email"),
                   },
                 }),
               }}
@@ -111,12 +117,11 @@ export const Signup: FC = () => {
               label={"Password"}
               register={{
                 ...register("password", {
-                  required: "This field is required.",
+                  required: t<string>("This field is required."),
                   pattern: {
                     value:
                       /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%^&*()_+={}[\]|;:"<>,.?/~`])[A-Za-z\d@$!%^&*()_+={}[\]|;:"<>,.?/~`]{8,}$/,
-                    message:
-                      "Invalid password. Please use a stronger password.",
+                    message: t("Invalid password."),
                   },
                 }),
               }}
@@ -126,10 +131,10 @@ export const Signup: FC = () => {
             <FormInput
               type="password"
               propsName={"repeatPassword"}
-              label={"Repeat Password"}
+              label={t("Repeat Password")}
               register={{
                 ...register("repeatPassword", {
-                  required: "This field is required.",
+                  required: t<string>("This field is required."),
                   pattern: {
                     value:
                       /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%^&*()_+={}[\]|;:"<>,.?/~`])[A-Za-z\d@$!%^&*()_+={}[\]|;:"<>,.?/~`]{8,}$/,
@@ -138,14 +143,14 @@ export const Signup: FC = () => {
                   },
                 }),
               }}
-              placeholder={"Repeat Password"}
+              placeholder={t("Repeat Password")}
               error={errors.repeatPassword}
             />
             {/* <FormInput
             propsName={"address"}
             label={"Address"}
             register={{
-              ...register("address", { required: "This field is required." }),
+              ...register("address", { required: t<string>("This field is required.") }),
             }}
             placeholder={"Address"}
             error={errors.address}
@@ -154,7 +159,7 @@ export const Signup: FC = () => {
             propsName={"province"}
             label={"Province"}
             register={{
-              ...register("province", { required: "This field is required." }),
+              ...register("province", { required: t<string>("This field is required.") }),
             }}
             placeholder={"Province"}
             error={errors.province}
@@ -164,22 +169,22 @@ export const Signup: FC = () => {
                 htmlFor={"language"}
                 className="block text-gray-700 font-bold mb-2"
               >
-                Language
+                {t("Language")}
               </label>
               <select
                 id="language"
                 className="shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 {...register("language", {
-                  required: "This field is required.",
+                  required: t<string>("This field is required."),
                 })}
                 defaultValue={"language"}
               >
-                <option value={Languages.ITALIAN}>Italian</option>
-                <option value={Languages.ENGLISH}>English</option>
+                <option value={Languages.ITALIAN}>{t("Italian")}</option>
+                <option value={Languages.ENGLISH}>{t("English")}</option>
               </select>
             </div>
           </div>
-          <Button type="submit">Sign Up</Button>
+          <Button type="submit">{t("Sign Up")}</Button>
         </form>
       </Card>
     </div>
