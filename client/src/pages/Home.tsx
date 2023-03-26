@@ -11,12 +11,13 @@ import Card from "../components/UI/Card";
 import BasketButton from "../components/BasketButton";
 import { colors } from "../constants/colors";
 import { useTranslation } from "react-i18next";
+import Error from "../components/Error";
 
 const Home: FC = () => {
   const { t } = useTranslation("translation");
   const dispatch = useDispatch<AppDispatch>();
   const { isLoggedIn, loggedUser } = useUserSession();
-
+  const error = useSelector((state: RootState) => state.error);
   const fetchedData = useSelector(
     (state: RootState) => state.baskets.fetchedData
   );
@@ -40,7 +41,9 @@ const Home: FC = () => {
   return (
     <>
       <Navbar title={t("Your Baskets")} />
-      {!fetchedData ? (
+      {error.isOnErrorState ? (
+        <Error message={error.errorMessage} />
+      ) : !fetchedData ? (
         <Loading />
       ) : (
         <div className="w-4/5 flex-container">

@@ -11,6 +11,10 @@ import Api from "../api/Api";
 import { BasketTypes } from "../types/Basket";
 import CustomShapeBarChart from "../components/CustomShapeBarChart";
 import { useTranslation } from "react-i18next";
+import { setError } from "../redux/error.slice";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/store";
+import Error from "../components/Error";
 
 interface BarData {
   name: BasketTypes;
@@ -31,6 +35,8 @@ interface DoughnutData {
 
 const Statistics: FC = () => {
   const { t } = useTranslation("translation");
+  const dispatch = useDispatch<AppDispatch>();
+  const error = useSelector((state: RootState) => state.error);
   const { isLoggedIn, loggedUser } = useUserSession();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [acquisitionsList, setAcquisitionsList] = useState<Acquisition[]>([]);
@@ -132,6 +138,8 @@ const Statistics: FC = () => {
         generateLineData(res[0].data);
         generateBarData(res[1].data);
         setIsLoading(false);
+      } else {
+        dispatch(setError({ errorMessage: "Fail to get statistics" }));
       }
     } catch (err) {
       console.error("🚀 ~ file: Statistics.tsx:29 ~ getData ~ err:", err);
@@ -147,7 +155,9 @@ const Statistics: FC = () => {
   return (
     <>
       <Navbar title={t("Statistics")} />
-      {isLoading ? (
+      {error.isOnErrorState ? (
+        <Error message={error.errorMessage} />
+      ) : isLoading ? (
         <Loading />
       ) : (
         <div className="w-full flex-container">

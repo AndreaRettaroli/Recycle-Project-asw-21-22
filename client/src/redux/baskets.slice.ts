@@ -7,6 +7,7 @@ import Api from '../api/Api';
 import { AddBasket } from '../pages';
 import { BasketDimensions, BasketTypes } from '../types/Basket';
 import { ClearRequest, PutRequest } from '../types/Acquisition';
+import { setError } from './error.slice';
 
 
 interface Basket {
@@ -22,7 +23,7 @@ interface Basket {
 
 interface BasketsState {
     fetchedData: boolean,
-    baskets: Basket[] ;
+    baskets: Basket[];
 }
 
 const initialState: BasketsState = {
@@ -43,7 +44,7 @@ export const basketsSlice = createSlice({
             state.fetchedData = false;
         },
         addBasket: (state, action: PayloadAction<Basket>) => {
-            state.baskets = [{ ...state.baskets, ...action.payload }]
+            state.baskets.push(action.payload)
             state.fetchedData = true
         },
         setUnfetched: (state) => {
@@ -85,6 +86,7 @@ export const basketsSlice = createSlice({
             }
         }
     }
+
 });
 
 export const { setBaskets, clearBaskets, setUnfetched, addBasket, updateBaskets, removeBasket, putTrash, clearTrash } = basketsSlice.actions;
@@ -101,9 +103,12 @@ export const getBaskets = (userId: string): ThunkAction<void, RootState, unknown
             if (response.status === 200 && !response.data.error) {
 
                 dispatch(setBaskets(response.data))
+            } else {
+                dispatch(setError({ errorMessage: "Fail to get baskets" }))
             }
         } catch (err) {
             console.error("🚀 ~ file: user.slice.ts:55 ~ err:", err)
+            dispatch(setError({ errorMessage: "Fail to get baskets" }))
 
         }
     }
@@ -112,7 +117,6 @@ export const getBaskets = (userId: string): ThunkAction<void, RootState, unknown
 export const createBasket = (data: any): ThunkAction<void, RootState, unknown, AnyAction> => {
     console.log("🚀 ~ file: baskets.slice.ts:76 ~ createBasket ~ data:", data)
     return async dispatch => {
-        dispatch(setUnfetched())
         try {
             const response = await Api.post("/api/basket", {
                 ...data
@@ -120,9 +124,12 @@ export const createBasket = (data: any): ThunkAction<void, RootState, unknown, A
             console.log("🚀 ~ file: baskets.slice.ts:80 ~ createBasket ~ response:", response)
             if (response.status === 200 && !response.data.error) {
                 dispatch(addBasket(response.data))
+            } else {
+                dispatch(setError({ errorMessage: "Fail to get create basket" }))
             }
         } catch (err) {
             console.log("🚀 ~ file: baskets.slice.ts:94 ~ createBasket ~ err:", err)
+            dispatch(setError({ errorMessage: "Fail to get create basket" }))
         }
     }
 }
@@ -131,22 +138,23 @@ export const createBasket = (data: any): ThunkAction<void, RootState, unknown, A
 export const updateBasket = (data: any): ThunkAction<void, RootState, unknown, AnyAction> => {
     console.log("🚀 ~ file: baskets.slice.ts:76 ~ createBasket ~ data:", data)
     return async dispatch => {
-        dispatch(setUnfetched())
         try {
             const response = await Api.put("/api/basket", { ...data }, { params: { id: data._id } })
             console.log("🚀 ~ file: baskets.slice.ts:109 ~ updateBasket ~ response:", response)
             if (response.status === 200 && !response.data.error) {
                 dispatch(updateBaskets(response.data))
+            } else {
+                dispatch(setError({ errorMessage: "Fail to get update basket" }))
             }
         } catch (err) {
             console.error("🚀 ~ file: baskets.slice.ts:114 ~ updateBasket ~ err:", err)
+            dispatch(setError({ errorMessage: "Fail to get update basket" }))
         }
     }
 }
 
 export const deleteBasket = (basketId: string | undefined): ThunkAction<void, RootState, unknown, AnyAction> => {
     return async dispatch => {
-        dispatch(setUnfetched())
         try {
             const response = await Api.delete("/api/basket", { params: { id: basketId } })
             console.log("🚀 ~ file: baskets.slice.ts:109 ~ deleteBasket ~ response:", response)
@@ -154,9 +162,12 @@ export const deleteBasket = (basketId: string | undefined): ThunkAction<void, Ro
                 if (!Object.is(basketId, undefined)) {
                     dispatch(removeBasket(basketId))
                 }
+            } else {
+                dispatch(setError({ errorMessage: "Fail to get remove basket" }))
             }
         } catch (err) {
             console.error("🚀 ~ file: baskets.slice.ts:129 ~ deleteBasket ~ err:", err)
+            dispatch(setError({ errorMessage: "Fail to get remove basket" }))
         }
     }
 }

@@ -11,6 +11,7 @@ import FormInput from "../components/UI/FormInput";
 import Loading from "../components/UI/Loading";
 import { Languages } from "../types/Languages";
 import { useTranslation } from "react-i18next";
+import Error from "../components/Error";
 
 export interface SignUpFormInput {
   name: string;
@@ -25,6 +26,7 @@ const Profile: FC = () => {
   const { t } = useTranslation("translation");
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.user.user);
+  const error = useSelector((state: RootState) => state.error);
   const { isLoggedIn, loggedUser, logout } = useUserSession();
 
   useEffect(() => {
@@ -56,11 +58,10 @@ const Profile: FC = () => {
   });
 
   const onSubmit = (data: SignUpFormInput) => {
-    dispatch(updateUser(data));
+    dispatch(updateUser(data, user?._id));
   };
 
-  const userLogout = (event: Event) => {
-    event.preventDefault();
+  const userLogout = () => {
     logout();
     dispatch(clearUser());
   };
@@ -68,7 +69,9 @@ const Profile: FC = () => {
   return (
     <>
       <Navbar title={user ? user?.name + t("Profile") : t("Loading Profile")} />
-      {!user && loggedUser ? (
+      {error.isOnErrorState ? (
+        <Error message={error.errorMessage} />
+      ) : !user && loggedUser ? (
         <Loading />
       ) : (
         <div className="flex-container">
