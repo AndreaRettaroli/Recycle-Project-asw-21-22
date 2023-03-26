@@ -6,16 +6,23 @@ const cors = require("cors");
 
 const mongoose = require("mongoose");
 
-const mongoHost = !Object.is(process.env?.MONGO_HOST, undefined)
-  ? process.env.MONGO_HOST
-  : "127.0.0.1";
-const mongoPort = 27017;
-const mongoConnection = `mongodb://${mongoHost}:${mongoPort}/recycle-database`;
-
-mongoose
-  .connect(mongoConnection)
-  .then(() => console.log("Connected to MongoDB."))
-  .catch((err) => console.error("Error connecting to MongoDB:", err));
+if (Object.is(process.env.CONNECTION_STRING, undefined)) {
+  const mongoHost = !Object.is(process.env?.MONGO_HOST, undefined)
+    ? process.env.MONGO_HOST
+    : "127.0.0.1";
+  const mongoPort = 27017;
+  const mongoConnection = `mongodb://${mongoHost}:${mongoPort}/recycle-database`;
+  mongoose
+    .connect(mongoConnection)
+    .then(() => console.log("Connected to MongoDB."))
+    .catch((err) => console.error("Error connecting to MongoDB:", err));
+} else {
+  const mongoConnection = process.env.CONNECTION_STRING;
+  mongoose
+    .connect(mongoConnection + "/recycle-database")
+    .then(() => console.log("Connected to MongoDB."))
+    .catch((err) => console.error("Error connecting to MongoDB:", err));
+}
 
 const express = require("express");
 const server = express();
