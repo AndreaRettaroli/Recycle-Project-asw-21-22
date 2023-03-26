@@ -2,7 +2,7 @@ import axios from "axios";
 import useUserSession from "../hooks/useUserSession";
 
 const DEV_HOST_BACKEND = "http://localhost:3000";
-const PROD_HOST_BACKEND = "http://localhost:3000";
+const PROD_HOST_BACKEND = "https://recycle-project-api.vercel.app";
 //const { isLoggedIn, loggedUser, login, logout } = useUserSession();
 
 const Api = axios.create({

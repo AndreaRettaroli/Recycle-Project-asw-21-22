@@ -5,7 +5,8 @@ import { getBaskets, onClearTrash, onPutTrash } from "../redux/baskets.slice";
 import { AppDispatch, RootState } from "../redux/store";
 
 export const SocketContext = createContext<unknown>(null);
-const SOCKET_SERVER_URL = "ws://127.0.0.1:3000";
+const SOCKET_SERVER_URL_DEV = "ws://127.0.0.1:3000";
+const SOCKET_SERVER_URL_PROD = "ws://recycle-project-api.vercel.app/";
 
 interface Props {
   children?: React.ReactNode;
@@ -23,7 +24,7 @@ const SocketContextProvider: FC<Props> = ({ children }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    const newSocket = io(SOCKET_SERVER_URL);
+    const newSocket = io(SOCKET_SERVER_URL_DEV);
     setSocket(newSocket);
   }, []);
 
