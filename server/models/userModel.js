@@ -19,11 +19,9 @@ const userSchema = new mongoose.Schema({
   },
   address: {
     type: String,
-    required: true,
   },
   province: {
     type: String,
-    required: true,
   },
   language: {
     type: String,

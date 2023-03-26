@@ -5,8 +5,11 @@ dotenv.config();
 const cors = require("cors");
 
 const mongoose = require("mongoose");
-const mongoHost = "127.0.0.1"; // MONGO_HOST in env ? env.MONGO_HOST : "127.0.0.1";
-const mongoPort = 27017; // MONGO_PORT in env ? env.MONGO_PORT : 27017;
+
+const mongoHost = !Object.is(process.env?.MONGO_HOST, undefined)
+  ? process.env.MONGO_HOST
+  : "127.0.0.1";
+const mongoPort = 27017;
 const mongoConnection = `mongodb://${mongoHost}:${mongoPort}/recycle-database`;
 
 mongoose

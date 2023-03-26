@@ -26,8 +26,6 @@
  *         - surname
  *         - email
  *         - password
- *         - address
- *         - province
  *         - language
  *         - role
  *       properties:

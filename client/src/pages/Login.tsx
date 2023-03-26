@@ -11,8 +11,12 @@ import Button from "../components/UI/Button";
 import Card from "../components/UI/Card";
 import FormInput from "../components/UI/FormInput";
 import logo from "/recycleLogo.jpg";
+import { useTranslation } from "react-i18next";
+import { setError } from "../redux/error.slice";
+import Error from "../components/Error";
 
 const Login: FC = () => {
+  const { t } = useTranslation("translation");
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -21,11 +25,10 @@ const Login: FC = () => {
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(getLoggedUser(loggedUser.userId));
-      navigate("/home");
+      navigate("/");
     }
   }, [isLoggedIn]);
-
-  const user = useSelector((state: RootState) => state.user.user);
+  const error = useSelector((state: RootState) => state.error);
 
   const {
     register,
@@ -49,45 +52,56 @@ const Login: FC = () => {
       if (response.status === 200) {
         dispatch(setAuthUser(response.data));
         login(response.data.token, response.data._id);
-        navigate("/home");
+        navigate("/");
+      } else {
+        dispatch(setError({ errorMessage: "Fail to Login" }));
       }
     } catch (err) {
       console.error("🚀 ~ file: Login.tsx:64 ~ userLogin ~ err:", err);
+      dispatch(setError({ errorMessage: "Fail to Login" }));
     }
   };
 
   return (
     <div className="flex-container">
-      <Card>
-        <img src={logo} width="80px" alt="recycle-logo" />
-        <h1 className="text-3xl font-bold mb-6 text-center">Login</h1>
-        <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
-          <FormInput
-            propsName={"email"}
-            label={"Email"}
-            type="email"
-            register={{
-              ...register("email", { required: "This field is required" }),
-            }}
-            placeholder={"Enter your email"}
-            error={errors?.email}
-          />
-          <FormInput
-            propsName={"password"}
-            label={"Password"}
-            type="password"
-            register={{
-              ...register("password", { required: "This field is required" }),
-            }}
-            placeholder={"Enter your password"}
-            error={errors?.password}
-          />
-          <Button type={"submit"}>Login</Button>
-        </form>
-        <Link className="m-auto underline" to={"/signup"}>
-          Sign Up
-        </Link>
-      </Card>
+      {error.isOnErrorState ? (
+        <Error message={error.errorMessage} />
+      ) : (
+        <Card>
+          <img src={logo} width="80px" alt="recycle-logo" />
+          <h1 className="text-3xl font-bold mb-6 text-center">{t("Login")}</h1>
+          <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
+            <FormInput
+              propsName={"email"}
+              label={"Email"}
+              type="email"
+              register={{
+                ...register("email", {
+                  required: t<string>("This field is required"),
+                }),
+              }}
+              placeholder={"Enter your email"}
+              error={errors?.email}
+            />
+            <FormInput
+              propsName={"password"}
+              label={"Password"}
+              type="password"
+              register={{
+                ...register("password", {
+                  required: t<string>("This field is required"),
+                }),
+              }}
+              placeholder={"Enter your password"}
+              error={errors?.password}
+            />
+            <Button type={"submit"}>{t("Login")}</Button>
+          </form>
+          <Link className="m-auto underline" to={"/signup"}>
+            {t("Sign Up")}
+          </Link>
+        </Card>
+      )}
     </div>
   );
 };

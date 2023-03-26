@@ -10,21 +10,23 @@ import Card from "../components/UI/Card";
 import FormInput from "../components/UI/FormInput";
 import Loading from "../components/UI/Loading";
 import { Languages } from "../types/Languages";
+import { useTranslation } from "react-i18next";
+import Error from "../components/Error";
 
 export interface SignUpFormInput {
   name: string;
   surname: string;
   email: string;
-  password: string;
-  repeatPassword: string;
   address: string;
   province: string;
   language: Languages;
 }
 
 const Profile: FC = () => {
+  const { t } = useTranslation("translation");
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.user.user);
+  const error = useSelector((state: RootState) => state.error);
   const { isLoggedIn, loggedUser, logout } = useUserSession();
 
   useEffect(() => {
@@ -43,14 +45,12 @@ const Profile: FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
+    //watch,
   } = useForm<SignUpFormInput>({
     defaultValues: {
       name: user?.name,
       surname: user?.surname,
       email: user?.email,
-      password: "",
-      repeatPassword: "",
       address: user?.address,
       province: user?.province,
       language: user?.language,
@@ -58,19 +58,20 @@ const Profile: FC = () => {
   });
 
   const onSubmit = (data: SignUpFormInput) => {
-    dispatch(updateUser(data));
+    dispatch(updateUser(data, user?._id));
   };
 
-  const userLogout = (event: Event) => {
-    event.preventDefault();
+  const userLogout = () => {
     logout();
     dispatch(clearUser());
   };
 
   return (
     <>
-      <Navbar title={user ? user?.name + " Profile" : "loading Profile"} />
-      {!user && loggedUser ? (
+      <Navbar title={user ? user?.name + t("Profile") : t("Loading Profile")} />
+      {error.isOnErrorState ? (
+        <Error message={error.errorMessage} />
+      ) : !user && loggedUser ? (
         <Loading />
       ) : (
         <div className="flex-container">
@@ -79,25 +80,25 @@ const Profile: FC = () => {
               <div className="grid-container">
                 <FormInput
                   propsName={"name"}
-                  label={"Name"}
+                  label={t("Name")}
                   register={{
                     ...register("name", {
-                      required: "This field is required.",
+                      required: t<string>("This field is required."),
                     }),
                   }}
-                  placeholder={"Name"}
+                  placeholder={t("Name")}
                   error={errors.name}
                   defaultValue={user?.name}
                 />
                 <FormInput
                   propsName={"surname"}
-                  label={"Surname"}
+                  label={t("Surname")}
                   register={{
                     ...register("surname", {
-                      required: "This field is required.",
+                      required: t<string>("This field is required."),
                     }),
                   }}
-                  placeholder={"Surname"}
+                  placeholder={t("Surname")}
                   error={errors.surname}
                   defaultValue={user?.surname}
                 />
@@ -107,10 +108,10 @@ const Profile: FC = () => {
                   label={"Email"}
                   register={{
                     ...register("email", {
-                      required: "This field is required.",
+                      required: t<string>("This field is required."),
                       pattern: {
                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                        message: "Invalid Email",
+                        message: t("Invalid Email"),
                       },
                     }),
                   }}
@@ -118,13 +119,13 @@ const Profile: FC = () => {
                   error={errors.email}
                   defaultValue={user?.email}
                 />
-                <FormInput
+                {/* <FormInput
                   type="password"
                   propsName={"password"}
                   label={"Password"}
                   register={{
                     ...register("password", {
-                      required: "This field is required.",
+                      required: t<string>("This field is required."),
                       pattern: {
                         value:
                           /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%^&*()_+={}[\]|;:"<>,.?/~`])[A-Za-z\d@$!%^&*()_+={}[\]|;:"<>,.?/~`]{8,}$/,
@@ -142,7 +143,7 @@ const Profile: FC = () => {
                   label={"Repeat Password"}
                   register={{
                     ...register("repeatPassword", {
-                      required: "This field is required.",
+                      required: t<string>("This field is required."),
                       pattern: {
                         value:
                           /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%^&*()_+={}[\]|;:"<>,.?/~`])[A-Za-z\d@$!%^&*()_+={}[\]|;:"<>,.?/~`]{8,}$/,
@@ -153,28 +154,28 @@ const Profile: FC = () => {
                   }}
                   placeholder={"Repeat Password"}
                   error={errors.repeatPassword}
-                />
+                /> */}
                 <FormInput
                   propsName={"address"}
-                  label={"Address"}
+                  label={t("Address")}
                   register={{
                     ...register("address", {
-                      required: "This field is required.",
+                      required: t<string>("This field is required."),
                     }),
                   }}
-                  placeholder={"Address"}
+                  placeholder={t("Address")}
                   error={errors.address}
                   defaultValue={user?.address}
                 />
                 <FormInput
                   propsName={"province"}
-                  label={"Province"}
+                  label={t("Province")}
                   register={{
                     ...register("province", {
-                      required: "This field is required.",
+                      required: t<string>("This field is required."),
                     }),
                   }}
-                  placeholder={"Province"}
+                  placeholder={t("Province")}
                   error={errors.province}
                   defaultValue={user?.province}
                 />
@@ -183,28 +184,28 @@ const Profile: FC = () => {
                     htmlFor={"language"}
                     className="block text-gray-700 font-bold mb-2"
                   >
-                    Language
+                    {t("Language")}
                   </label>
                   <select
                     id="language"
                     className="shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     {...register("language", {
-                      required: "This field is required.",
+                      required: t<string>("This field is required."),
                     })}
                     defaultValue={user?.language}
                   >
-                    <option value={Languages.ITALIAN}>Italian</option>
-                    <option value={Languages.ENGLISH}>English</option>
+                    <option value={Languages.ITALIAN}>{t("Italian")}</option>
+                    <option value={Languages.ENGLISH}>{t("English")}</option>
                   </select>
                 </div>
               </div>
-              <Button type="submit">Update</Button>
+              <Button type="submit">{t("Update")}</Button>
             </form>
           </Card>
           <Card>
             <div className="w-full  py-3 ">
               <Button type="button" onClick={userLogout}>
-                Logout
+                {t("Logout")}
               </Button>
             </div>
           </Card>

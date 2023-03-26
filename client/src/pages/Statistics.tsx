@@ -1,34 +1,42 @@
 import React, { FC, useEffect, useState } from "react";
 import LineChart from "../components/LineChart";
 import DoughnutChart from "../components/CustomActiveShapePieChart";
-import AreaChart from "../components/StackedAreaChart";
 import Card from "../components/UI/Card";
 import Navbar from "../components/UI/Navbar";
 import { Acquisition } from "../types/Acquisition";
 import { Withdrawal } from "../types/Withdrawal";
 import useUserSession from "../hooks/useUserSession";
-import { useDispatch } from "react-redux";
 import Loading from "../components/UI/Loading";
 import Api from "../api/Api";
 import { BasketTypes } from "../types/Basket";
 import CustomShapeBarChart from "../components/CustomShapeBarChart";
+import { useTranslation } from "react-i18next";
+import { setError } from "../redux/error.slice";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/store";
+import Error from "../components/Error";
 
 interface BarData {
   name: BasketTypes;
+  label: string;
   acquisitionsNumber: number;
 }
 interface LineData {
-  name: BasketTypes;
+  name: BasketTypes | string;
   wasteValue: number;
   wasteWeight: number;
 }
 
 interface DoughnutData {
   name: BasketTypes;
+  label: string;
   value: number;
 }
 
 const Statistics: FC = () => {
+  const { t } = useTranslation("translation");
+  const dispatch = useDispatch<AppDispatch>();
+  const error = useSelector((state: RootState) => state.error);
   const { isLoggedIn, loggedUser } = useUserSession();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [acquisitionsList, setAcquisitionsList] = useState<Acquisition[]>([]);
@@ -51,6 +59,7 @@ const Statistics: FC = () => {
       .map((name) => {
         return {
           name: name,
+          label: t(name),
           acquisitionsNumber: data.filter((item) => item?.wasteType === name)
             .length,
         };
@@ -72,7 +81,7 @@ const Statistics: FC = () => {
       .map((item) => item.name)
       .map((name) => {
         return {
-          name: name,
+          name: t(name),
           wasteValue: data
             .filter((item) => item?.basketType === name)
             .map((item) => item?.wasteValue)
@@ -102,6 +111,7 @@ const Statistics: FC = () => {
       .map((name) => {
         return {
           name: name,
+          label: t(name),
           value: data
             .filter((item) => item?.basketType === name)
             .map((item) => item?.wasteValue)
@@ -128,6 +138,8 @@ const Statistics: FC = () => {
         generateLineData(res[0].data);
         generateBarData(res[1].data);
         setIsLoading(false);
+      } else {
+        dispatch(setError({ errorMessage: "Fail to get statistics" }));
       }
     } catch (err) {
       console.error("🚀 ~ file: Statistics.tsx:29 ~ getData ~ err:", err);
@@ -142,8 +154,10 @@ const Statistics: FC = () => {
 
   return (
     <>
-      <Navbar title="Statistics" />
-      {isLoading ? (
+      <Navbar title={t("Statistics")} />
+      {error.isOnErrorState ? (
+        <Error message={error.errorMessage} />
+      ) : isLoading ? (
         <Loading />
       ) : (
         <div className="w-full flex-container">
@@ -151,7 +165,7 @@ const Statistics: FC = () => {
             <Card>
               <div className="chart-container flex items-center">
                 <div className="w-3/6 text-center">
-                  <h2 className="text-2xl font-bold">Earned</h2>
+                  <h2 className="text-2xl font-bold">{t("Earned")}</h2>
                   <b className="text-3xl text-green">
                     {withdrawalsList
                       .map((item) => item?.wasteValue)
@@ -161,7 +175,7 @@ const Statistics: FC = () => {
                   </b>
                 </div>
                 <div className="w-3/6 text-center ">
-                  <h2 className="text-2xl font-bold">Recycled</h2>
+                  <h2 className="text-2xl font-bold">{t("Recycled")}</h2>
                   <b className="text-3xl text-green">
                     {withdrawalsList
                       .map((item) => item?.wasteWeight)
@@ -174,16 +188,25 @@ const Statistics: FC = () => {
             </Card>
             <Card>
               <div className="chart-container">
+                <h3 className="text-1xl font-bold text-center">
+                  {t("Recycled")}
+                </h3>
                 <LineChart data={lineData} />
               </div>
             </Card>
             <Card>
               <div className="chart-container">
+                <h3 className="text-1xl font-bold text-center">
+                  {t("Acquisitions")}
+                </h3>
                 <CustomShapeBarChart data={barData} />
               </div>
             </Card>
             <Card>
               <div className="chart-container">
+                <h3 className="text-1xl font-bold text-center">
+                  {t("Income")}
+                </h3>
                 <DoughnutChart data={doughnutData} />
               </div>
             </Card>

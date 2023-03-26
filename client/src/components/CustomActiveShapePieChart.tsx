@@ -1,9 +1,11 @@
 import React, { PureComponent, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { PieChart, Pie, Sector, ResponsiveContainer, Cell } from "recharts";
 import { colors } from "../constants/colors";
 
 interface Data {
   name: string;
+  label: string;
   value: number;
 }
 
@@ -40,7 +42,7 @@ const renderActiveShape = (props: any) => {
     <g>
       <text x={cx} y={cy} dy={8} textAnchor="middle" fill={"#333"}>
         {/**or fill={fill} to have chars color in the center text*/}
-        {payload.name}
+        {payload.label}
       </text>
       <Sector
         cx={cx}
@@ -71,7 +73,7 @@ const renderActiveShape = (props: any) => {
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
-      >{`Income ${value.toFixed(2)}$`}</text>
+      >{`${value.toFixed(2)}$`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -79,13 +81,14 @@ const renderActiveShape = (props: any) => {
         textAnchor={textAnchor}
         fill="#999"
       >
-        {`Rate ${(percent * 100).toFixed(2)}%`}
+        {`${(percent * 100).toFixed(2)}%`}
       </text>
     </g>
   );
 };
 
 const DoughnutChart: React.FC<Props> = ({ data }) => {
+  const { t } = useTranslation("translation");
   const [activeIndex, setActiveIndex] = useState(0);
 
   const onPieEnter = (_: any, index: any) => {
