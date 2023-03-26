@@ -19,8 +19,8 @@ if (Object.is(process.env.CONNECTION_STRING, undefined)) {
 } else {
   const mongoConnection = process.env.CONNECTION_STRING;
   mongoose
-    .connect(mongoConnection + "/recycle-database")
-    .then(() => console.log("Connected to MongoDB."))
+    .connect(mongoConnection)
+    .then(() => console.log("Connected to MongoDB Atlas."))
     .catch((err) => console.error("Error connecting to MongoDB:", err));
 }
 
