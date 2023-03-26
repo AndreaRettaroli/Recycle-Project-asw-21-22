@@ -49,5 +49,17 @@
   "Acquisitions": "Acquisizioni",
   "Waste Weight": "Peso Rifiuto",
   "Waste Value": "Valore Rifiuto",
-  "Number of Acquisitions": "Numero di Acquisizioni"
+  "Number of Acquisitions": "Numero di Acquisizioni",
+  "Fail to set user": "Errore nell'assegnazione utente",
+  "Fail to Login": "Errore nel login",
+  "Fail to Signup": "Errore nella registrazione",
+  "Fail to get user": "Errore nell'attesa dell'utente",
+  "Fail to update user": "Errore aggiornamento utente",
+  "Fail to get baskets": "Errore nell'attesa dei cestini",
+  "Fail to get create basket": "Errore creazione cestino",
+  "Fail to get update basket": "Errore aggiornamento cestino",
+  "Fail to get remove basket": "Errore rimozione cestino",
+  "onError": "Oops! Qualcosa è andato storto",
+  "Fail to get statistics": "Errore nell'attesa delle statistiche",
+  "Retry": "Riprova"
 }

@@ -49,5 +49,17 @@
   "Acquisitions": "Acquisitions",
   "Waste Weight": "Waste Weight",
   "Waste Value": "Waste Value",
-  "Number of Acquisitions":"Number of Acquisitions"
+  "Number of Acquisitions": "Number of Acquisitions",
+  "Fail to set user": "Fail to set user",
+  "Fail to Login": "Fail to Login",
+  "Fail to Signup": "Fail to Signup",
+  "Fail to get user": "Fail to get user",
+  "Fail to update user": "Fail to update user",
+  "Fail to get baskets": "Fail to get baskets",
+  "Fail to get create basket": "Fail to get create basket",
+  "Fail to get update basket": "Fail to get update basket",
+  "Fail to get remove basket": "Fail to get remove basket",
+  "onError": "Oops! Something went wrong",
+  "Fail to get statistics": "Fail to get statistics",
+  "Retry": "Retry"
 }
