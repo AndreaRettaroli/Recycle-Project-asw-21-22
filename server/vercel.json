@@ -8,6 +8,11 @@
   ],
   "routes": [
     {
+      "src": "/socket.io/(.*)",
+      "dest": "https://recycle-project-api.vercel.app:3000/socket.io/$1",
+      "protocols": ["websocket"]
+    },
+    {
       "src": "/(.*)",
       "dest": "index.js"
     }

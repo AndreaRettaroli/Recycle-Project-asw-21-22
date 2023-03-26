@@ -17,7 +17,12 @@ export const resources = {
 } as const;
 
 const getLanguage = () => {
-  return window.navigator.language.slice(0, 2)
+  const language = window.navigator.language.slice(0, 2)
+  if (language === Languages.ENGLISH || language === Languages.ITALIAN) {
+    return language
+  } else {
+    return "en"
+  }
 }
 
 
