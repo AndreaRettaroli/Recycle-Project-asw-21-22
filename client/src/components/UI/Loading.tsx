@@ -6,7 +6,7 @@ interface Props {
 
 const Loading: React.FC<Props> = ({ message = "Loading..." }) => {
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex-container">
       <div className="text-center">
         <svg
           className="animate-spin h-8 w-8 mx-auto mb-4 text-green-500"
