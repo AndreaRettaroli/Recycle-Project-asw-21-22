@@ -1,10 +1,4 @@
-const userModel = require("../models/userModel");
-const basketModel = require("../models/basketModel");
-const acquisitionModel = require("../models/acquisitionModel");
-
 const Utils = require("../utils/functions");
-
-const WasteType = ["PLASTIC", "GLASS", "METALS", "ORGANIC", "PAPER", "MIXED"];
 
 const PUT_TRASH = "put_trash";
 const REMOVE_TRASH = "remove_trash";

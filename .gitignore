@@ -36,3 +36,5 @@ npm-debug.log
 # remove docker data
 data/*
 data
+#remove report imgs 
+report/img/*

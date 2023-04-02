@@ -27,9 +27,5 @@ docker-compose up
 
 # Web site
 
-You can access to [Recycle web](https://recycle-project.vercel.app/login) and create an account or also you can use the follow credentials:
-
-````
-email: aaa@gmail.com
-password: -Prova123
-````
+You can access to [Recycle web](https://recycle-project.vercel.app/login) and create an account.
+Unfortunatly the WebSocket doesn't work on Vercel deployment. I advice to use Docker deployment.
