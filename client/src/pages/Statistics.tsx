@@ -14,7 +14,7 @@ import { useTranslation } from "react-i18next";
 import { setError } from "../redux/error.slice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
-import Error from "../components/Error";
+import ErrorMessage from "../components/Error";
 
 interface BarData {
   name: BasketTypes;
@@ -156,7 +156,7 @@ const Statistics: FC = () => {
     <>
       <Navbar title={t("Statistics")} />
       {error.isOnErrorState ? (
-        <Error message={error.errorMessage} />
+        <ErrorMessage message={error.errorMessage} />
       ) : isLoading ? (
         <Loading />
       ) : (

@@ -11,7 +11,7 @@ import FormInput from "../components/UI/FormInput";
 import Loading from "../components/UI/Loading";
 import { Languages } from "../types/Languages";
 import { useTranslation } from "react-i18next";
-import Error from "../components/Error";
+import ErrorMessage from "../components/Error";
 
 export interface SignUpFormInput {
   name: string;
@@ -45,7 +45,6 @@ const Profile: FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-    //watch,
   } = useForm<SignUpFormInput>({
     defaultValues: {
       name: user?.name,
@@ -70,7 +69,7 @@ const Profile: FC = () => {
     <>
       <Navbar title={user ? user?.name + t("Profile") : t("Loading Profile")} />
       {error.isOnErrorState ? (
-        <Error message={error.errorMessage} />
+        <ErrorMessage message={error.errorMessage} />
       ) : !user && loggedUser ? (
         <Loading />
       ) : (
@@ -119,42 +118,6 @@ const Profile: FC = () => {
                   error={errors.email}
                   defaultValue={user?.email}
                 />
-                {/* <FormInput
-                  type="password"
-                  propsName={"password"}
-                  label={"Password"}
-                  register={{
-                    ...register("password", {
-                      required: t<string>("This field is required."),
-                      pattern: {
-                        value:
-                          /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%^&*()_+={}[\]|;:"<>,.?/~`])[A-Za-z\d@$!%^&*()_+={}[\]|;:"<>,.?/~`]{8,}$/,
-                        message:
-                          "Invalid password. Please use a stronger password.",
-                      },
-                    }),
-                  }}
-                  placeholder={"Password"}
-                  error={errors.password}
-                />
-                <FormInput
-                  type="password"
-                  propsName={"repeatPassword"}
-                  label={"Repeat Password"}
-                  register={{
-                    ...register("repeatPassword", {
-                      required: t<string>("This field is required."),
-                      pattern: {
-                        value:
-                          /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%^&*()_+={}[\]|;:"<>,.?/~`])[A-Za-z\d@$!%^&*()_+={}[\]|;:"<>,.?/~`]{8,}$/,
-                        message:
-                          "Invalid password. Please use a stronger password.",
-                      },
-                    }),
-                  }}
-                  placeholder={"Repeat Password"}
-                  error={errors.repeatPassword}
-                /> */}
                 <FormInput
                   propsName={"address"}
                   label={t("Address")}

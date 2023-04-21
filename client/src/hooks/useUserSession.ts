@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-interface userData {
+interface UserData {
     userId: string;
     token: string
 }
 
 interface UserSession {
     isLoggedIn: boolean;
-    loggedUser: userData
+    loggedUser: UserData
     login: (token: string, userId: string) => void
     logout: () => void
 

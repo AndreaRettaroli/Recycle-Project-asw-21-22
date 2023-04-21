@@ -1,4 +1,4 @@
-import React, { PureComponent, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PieChart, Pie, Sector, ResponsiveContainer, Cell } from "recharts";
 import { colors } from "../constants/colors";
@@ -88,7 +88,6 @@ const renderActiveShape = (props: any) => {
 };
 
 const DoughnutChart: React.FC<Props> = ({ data }) => {
-  const { t } = useTranslation("translation");
   const [activeIndex, setActiveIndex] = useState(0);
 
   const onPieEnter = (_: any, index: any) => {

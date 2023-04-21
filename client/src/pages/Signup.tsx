@@ -14,7 +14,7 @@ import { AppDispatch, RootState } from "../redux/store";
 import { setAuthUser } from "../redux/user.slice";
 import { Languages } from "../types/Languages";
 import logo from "/recycleLogo.jpg";
-import Error from "../components/Error";
+import ErrorMessage from "../components/Error";
 
 interface SignUpFormInput {
   name: string;
@@ -31,9 +31,9 @@ export const Signup: FC = () => {
   const { t } = useTranslation("translation");
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  
+
   const error = useSelector((state: RootState) => state.error);
-  const { isLoggedIn, loggedUser, login, logout } = useUserSession();
+  const { login } = useUserSession();
 
   const {
     register,
@@ -78,7 +78,7 @@ export const Signup: FC = () => {
   return (
     <div className="flex-container">
       {error.isOnErrorState ? (
-        <Error message={error.errorMessage} />
+        <ErrorMessage message={error.errorMessage} />
       ) : (
         <Card>
           <img src={logo} width="80px" alt="recycle-logo" />

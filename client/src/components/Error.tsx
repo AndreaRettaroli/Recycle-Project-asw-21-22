@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +11,7 @@ interface Props {
   message: string;
 }
 
-const Error: FC<Props> = ({ message }) => {
+const ErrorMessage: FC<Props> = ({ message }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -35,4 +35,4 @@ const Error: FC<Props> = ({ message }) => {
   );
 };
 
-export default Error;
+export default ErrorMessage;

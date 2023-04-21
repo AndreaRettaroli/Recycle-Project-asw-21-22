@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,7 +39,6 @@ const BasketDetails: FC = () => {
   useEffect(() => {
     if (!fetchedData && isLoggedIn && !basket) {
       dispatch(getBaskets(loggedUser.userId));
-      //setBasket(baskets?.filter((basket) => basket._id === basketId)[0]);
     }
   }, [fetchedData, isLoggedIn, basket]);
 
