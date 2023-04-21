@@ -4,7 +4,7 @@ FROM node:lts-alpine
 ENV WORKINGDIR=/root/app
 # set working dir
 WORKDIR ${WORKINGDIR}
-COPY ./ ${WORKINGDIR}/
+COPY . ${WORKINGDIR}/
 
 ENV MONGO_USER admin
 ENV MONGO_PASSWORD admin

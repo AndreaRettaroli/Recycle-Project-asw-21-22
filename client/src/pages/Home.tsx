@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { AppDispatch, RootState } from "../redux/store";
 import Loading from "../components/UI/Loading";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,7 +11,7 @@ import Card from "../components/UI/Card";
 import BasketButton from "../components/BasketButton";
 import { colors } from "../constants/colors";
 import { useTranslation } from "react-i18next";
-import Error from "../components/Error";
+import ErrorMessage from "../components/Error";
 
 const Home: FC = () => {
   const { t } = useTranslation("translation");
@@ -42,7 +42,7 @@ const Home: FC = () => {
     <>
       <Navbar title={t("Your Baskets")} />
       {error.isOnErrorState ? (
-        <Error message={error.errorMessage} />
+        <ErrorMessage message={error.errorMessage} />
       ) : !fetchedData ? (
         <Loading />
       ) : (

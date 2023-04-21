@@ -58,8 +58,8 @@ const BasketAcquisitionsList: FC<Props> = ({ basketId }) => {
             {acquisitionsList
               .reverse()
               .slice(0, 10)
-              .map((item, index) => (
-                <li key={"acquisition-" + index} className="list-disc ml-4">
+              .map((item) => (
+                <li key={"acquisition-" + item._id} className="list-disc ml-4">
                   {item.wasteName +
                     " " +
                     item.wasteWeight +

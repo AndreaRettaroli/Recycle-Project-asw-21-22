@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 #root {
-  height: 110vh; /**/
   min-height: 100%;
   height: auto !important; /* cross-browser */
 }

@@ -4,7 +4,7 @@ const WasteType = ["PLASTIC", "GLASS", "METALS", "ORGANIC", "PAPER", "MIXED"];
 
 exports.createPrice = async (req, res) => {
   try {
-    const { wasteType, value } = req.body;
+    const { wasteType } = req.body;
     let price = await priceModel.find({ wasteType: wasteType });
     if (price.length > 0) {
       return res

@@ -1,13 +1,13 @@
 import React, { FC } from "react";
-import { FieldError, FieldErrors } from "react-hook-form";
+import { FieldError } from "react-hook-form";
 
 interface Props {
   propsName: string;
   label: string;
   register: any;
   placeholder: string;
-  type?: React.HTMLInputTypeAttribute | undefined;
-  error: FieldError | undefined;
+  type?: React.HTMLInputTypeAttribute;
+  error?: FieldError;
   defaultValue?: any;
 }
 const FormInput: FC<Props> = ({

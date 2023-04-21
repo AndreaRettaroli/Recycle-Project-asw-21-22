@@ -13,14 +13,14 @@ import FormInput from "../components/UI/FormInput";
 import logo from "/recycleLogo.jpg";
 import { useTranslation } from "react-i18next";
 import { setError } from "../redux/error.slice";
-import Error from "../components/Error";
+import ErrorMessage from "../components/Error";
 
 const Login: FC = () => {
   const { t } = useTranslation("translation");
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const { isLoggedIn, loggedUser, login, logout } = useUserSession();
+  const { isLoggedIn, loggedUser, login } = useUserSession();
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -65,7 +65,7 @@ const Login: FC = () => {
   return (
     <div className="flex-container">
       {error.isOnErrorState ? (
-        <Error message={error.errorMessage} />
+        <ErrorMessage message={error.errorMessage} />
       ) : (
         <Card>
           <img src={logo} width="80px" alt="recycle-logo" />

@@ -7,9 +7,9 @@ const userModel = require("../models/userModel");
 const mongoose = require("mongoose");
 
 chai.use(chaiHttp);
-var id = "";
-var email = (Math.random() + 1).toString(36).substring(7);
-var token = "";
+let id = "";
+let email = (Math.random() + 1).toString(36).substring(7);
+let token = "";
 
 describe("POST /api/signup", () => {
   const user = {

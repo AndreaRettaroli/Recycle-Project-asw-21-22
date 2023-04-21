@@ -1,4 +1,4 @@
-import react, { FC } from "react";
+import { FC } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "/recycleLogo.jpg";
 import home from "../../assets/home.svg";

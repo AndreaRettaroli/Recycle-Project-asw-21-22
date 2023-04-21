@@ -20,11 +20,7 @@ const AddBasket: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user.user);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<AddBasketFormInput>({
+  const { register, handleSubmit } = useForm<AddBasketFormInput>({
     defaultValues: {
       type: BasketTypes.MIXED,
       dimension: BasketDimensions.MEDIUM,
