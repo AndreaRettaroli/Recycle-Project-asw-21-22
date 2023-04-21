@@ -21,8 +21,8 @@ export const errorSlice = createSlice({
             state.isOnErrorState = true
             state.errorMessage = action.payload.errorMessage;
         },
-        clearError: (state) => {
-            state = {...initialState}
+        clearError: () => {
+            return initialState
         },
     },
 });
