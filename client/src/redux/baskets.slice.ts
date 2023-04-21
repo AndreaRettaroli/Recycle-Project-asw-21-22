@@ -1,10 +1,8 @@
-import { Action, AnyAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AnyAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { ThunkAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-import { User } from '../types/User';
 import Api from '../api/Api';
-import { AddBasket } from '../pages';
 import { BasketDimensions, BasketTypes } from '../types/Basket';
 import { ClearRequest, PutRequest } from '../types/Acquisition';
 import { setError } from './error.slice';
