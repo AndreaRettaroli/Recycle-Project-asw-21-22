@@ -2,6 +2,11 @@
 
 This is a project for [Application and Web Services course](https://www.unibo.it/it/didattica/insegnamenti/insegnamento/2022/412604)
 
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=AndreaRettaroli_Recycle-Project-asw-21-22&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=AndreaRettaroli_Recycle-Project-asw-21-22)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=AndreaRettaroli_Recycle-Project-asw-21-22&metric=bugs)](https://sonarcloud.io/dashboard?id=AndreaRettaroli_Recycle-Project-asw-21-22)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=AndreaRettaroli_Recycle-Project-asw-21-22l&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=AndreaRettaroli_Recycle-Project-asw-21-22)
+
+
 # Docker instructions
 create an image of client:
 ````
