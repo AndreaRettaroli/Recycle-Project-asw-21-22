@@ -22,10 +22,7 @@ export const errorSlice = createSlice({
             state.errorMessage = action.payload.errorMessage;
         },
         clearError: (state) => {
-            state = {
-                isOnErrorState: false,
-                errorMessage: ""
-            }
+            state = {...initialState}
         },
     },
 });
